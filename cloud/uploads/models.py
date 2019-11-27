@@ -13,16 +13,16 @@ class Patient(models.Model):
     pStatus     = models.CharField(max_length = 5,   null=False)
     pRemark     = models.CharField(max_length = 255, null=True)
     pAge        = models.IntegerField()
-    dID         = models.ForeignKey('Doctor', on_delete = models.CASCADE)
+    dID         = models.ForeignKey('login.Doctor', on_delete = models.CASCADE)
 
     def __str__(self):
         return self.pID
 
 
-class Doctor(models.Model):
-    dID         = models.AutoField(primary_key = True)
-    dAccount    = models.CharField(max_length = 15)
-    dPassword   = models.CharField(max_length = 255) 
+# class Doctor(models.Model):
+#     dID         = models.AutoField(primary_key = True)
+#     dAccount    = models.CharField(max_length = 15)
+#     dPassword   = models.CharField(max_length = 255) 
 
-    def __str__(self):
-        return self.dID
+#     def __str__(self):
+#         return self.dID
