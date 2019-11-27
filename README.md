@@ -1,7 +1,8 @@
 # CSC4160/ERG3010
  
+ # IMPORTANT NOTE！！
  
- the folder "cloud" is the whole Django project. 
+ The folder "cloud" is the whole Django project. 
  
  Currently, it only have the project skeleton. But models and database is ready. 
  You can make modifications and improvements base on the skeleton. 
