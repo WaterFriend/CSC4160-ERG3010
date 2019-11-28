@@ -15,8 +15,14 @@ from login.models   import Doctor
 
 def upload(request):
     if request.method == "POST":
-        check_box = request.POST.getlist('check_box')
-        accountType = request.POST.get('accountType')
+        firstName   = request.POST.get('firstName')
+        lastName    = request.POST.get('lastName')
+        gender      = request.POST.get('gender')
+        race        = request.POST.get('race')
+        ethnicity   = request.POST.get('ethnicity')
+        status      = request.POST.get('status')
+        agree       = request.POST.get('age')
+
         userEmail = request.POST.get('userEmail')
         password = str(request.POST.get('password'))
         repPassword = str(request.POST.get('reppassword'))
