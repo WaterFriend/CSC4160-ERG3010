@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'storages',
-    'uploads.apps.UploadsConfig',
+    'upload.apps.UploadConfig',
     'home.apps.HomeConfig',
     'login.apps.LoginConfig',
     'result.apps.ResultConfig',
