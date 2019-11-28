@@ -126,17 +126,13 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 
 # Get connection to the AWS S3 bucket
-
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'image'),
-]
 
 AWS_ACCESS_KEY_ID = 'AKIASKKR5242U53BQZ5C'
 AWS_SECRET_ACCESS_KEY = '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'
