@@ -14,36 +14,57 @@ from login.models   import Doctor
 
 
 @csrf_exempt
-def upload(request):  #(request, userID)
+def upload(request,doctorID):  #(request, userID)
     if request.method == "POST":
+        check_box   = request.POST.getlist('check_box')
+        
+        fName      = request.POST.get('firstName')
+        lName       = request.POST.get('lastName')
+        gender      = request.POST.get('gender')
+        race        = request.POST.get('race')
+        ethnicity   = request.POST.get('ethnicity')
+        status      = request.POST.get('status')
+        age         = request.POST.get('age')
+        dID         = Doctor.objects.get(dID=doctorID)
+        
         message = "You should agree with the upload privacy of Cancer Dection System!"
-        check_box = request.POST.getlist('check_box')
-        stu = Student.objects.get(stu_id=userID)
-        stu.stu_fname = request.POST.get('firstName')
-        stu.stu_lname = request.POST.get('lastName')
-        if request.POST.get('firstName') != "" and request.POST.get('lastName') != "":
-            if check_box:        
-                genderSet = {"male":0, "female":1}
-                # stu = Student.objects.get(stu_id=userID)
-                # if request.POST.get('firstName') != "":
-                #     stu.stu_fname = request.POST.get('firstName')
-                # if request.POST.get('lastName') != "":    
-                #     stu.stu_lname = request.POST.get('lastName')
-                if request.POST.get('phoneNum') != "":    
-                    stu.stu_phone = request.POST.get('phoneNum')
-                if request.POST.get('university') != "":     
-                    stu.stu_c_uni = request.POST.get('university')
-                if request.POST.get('major') != "": 
-                    stu.stu_major = request.POST.get('major')
+        if check_box:
+            if fName != "" and lName != "":                                                     #check if user doesn't provide patient's full name 
+                if gender != "":                                                                #check if user doesn't provide patient's gender 
+                    if "@" in userEmail:                                                        #check if this is a formal E-mail formate
+                        if RegInfo.objects.filter(reg_id=userEmail).exists() == False:          #check if the account had existed
+                            if password == repPassword:                                         #check if the two passwords are differents 
 
-                if request.POST.get('gender') != "":
-                    gender = str(request.POST.get('gender'))
-                    gender = gender.lower()
-                    if genderSet.__contains__(gender) == True:
-                        stu.stu_gender = genderSet.get(gender)
-            stu.save()
-            return redirect('/stu/profile/%s' %userID)
-        else:
-            message = "First name and last name should be filled!" 
-        return render(request, 'stu/personal-edit.html', {"message": message}) 
-    return render(request, 'stu/personal-edit.html')
+                                if accountType == "Student":
+                                    sid = "0" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
+                                    #print(sid)
+                                    Reg = RegInfo.objects.create(reg_id=userEmail, reg_password=password)
+                                    Stu = Student.objects.create(stu_id=sid, stu_email=userEmail, reg=Reg)
+                                    return redirect('../stu/editor/%s' %sid)
+                                
+                                elif accountType == "University":
+                                    uid = "1" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
+                                    #print(uid)
+                                    Reg = RegInfo.objects.create(reg_id=userEmail, reg_password=password)
+                                    Uni = University.objects.create(uni_id=uid, uni_email=userEmail, reg=Reg)
+                                    return redirect('../uni/editorCreate/%s' %userEmail)  
+
+                                elif accountType == "Guardian":
+                                    gid = "2" + time.strftime("%Y%m%d%H%M%S", time.localtime())
+                                    #print(gid)
+                                    Reg = RegInfo.objects.create(reg_id=userEmail, reg_password=password)
+                                    Gua = Guardian.objects.create(guardian_id=gid, guardian_email=userEmail, reg=Reg) 
+                                    return redirect('../guardian/editor/%s' %gid)                                                      
+                            else:
+                                message = "Your second password is not match, please try again."
+                        else:
+                            message = "The account is already exist!"
+                    else:
+                        message = "Please enter correct E-mail format."
+                else:
+                    message = "Please provide patient's gender!"
+            else:
+                message = "Please provide patient's full name!"
+        return render(request, 'reg/register.html', {"message": message})
+    return render(request, 'reg/register.html')
+
