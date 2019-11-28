@@ -23,6 +23,7 @@ def upload(request):
         status      = request.POST.get('status')
         agree       = request.POST.get('age')
 
+
         userEmail = request.POST.get('userEmail')
         password = str(request.POST.get('password'))
         repPassword = str(request.POST.get('reppassword'))
