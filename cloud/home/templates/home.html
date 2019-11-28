@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Search Form -->
+<!-- <div class="md-form mt-0"> -->
+    <!--<form action="{% url 'search_result' %}" method="get" class= "search-form">
+      <input class="form-control" name="q" type="text" placeholder="Search..." aria-label="Search">-->
+
+      
+      <div class="form-row">
+          <div class="form-group col-md-2 col-lg-2">
+              <div class="input-group">
+                  <input class="form-control py-2 border" type="search" name="firstname" placeholder="First Name.." />
+                  
+              </div>
+            </div>
+
+            <div class="form-group col-md-2 col-lg-2">
+                <div class="input-group">
+                    <input class="form-control py-2 border" type="search" name="lastname" placeholder="Last Name.." />
+                </div>
+              </div>
+
+              <div class="form-group col-md-4 col-lg-4">
+                  <select id="category" class="form-control" name="category">
+                    <option selected>Gender...</option>
+                    <option value="{{ cat }}">{{ cat }}</option>
+                  </select>
+                </div>
+      
+          <div class="form-group col-md-2 col-lg-2">
+              <div class="input-group">
+                  <input class="form-control py-2 border-right-0 border" type="search" name="Age" placeholder="Age.." />
+                  <span class="input-group-append">
+                      <div class="input-group-text bg-transparent">
+                          <i class="fa fa-search"></i>
+                      </div>
+                  </span>
+              </div>
+            </div>
+          <div class="form-group col-md-4 col-lg-4">
+              <select id="category" class="form-control" name="category">
+                <option selected>Choose Doctor...</option>
+                {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+              </select>
+            </div>
+      </div>
+        
+    <!--</form>
+</div>-->
+
+<br>
+
+<!--List-->
+<table class="table table-hover table-responsive-sm">
+    <thead class = "thead-dark"> 
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td>
+            {% if book.cover %}
+              <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ book.title }}</td>
+          <td>
+            <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Download PDF
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

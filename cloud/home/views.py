@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, FormView, ListView
+from django.core.files.storage import FileSystemStorage
+from django.contrib.staticfiles import finders
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
+def result_list(request):
+    content = []
+    return render(request, '.\result_list.html', content)
