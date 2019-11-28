@@ -12,7 +12,8 @@ class Patient(models.Model):
     pEthnicity  = models.CharField(max_length = 20,  blank=True, null=True)
     pStatus     = models.CharField(max_length = 5,   blank=True, null=False)
     pRemark     = models.CharField(max_length = 255, blank=True, null=True)
-    pAge        = models.IntegerField()
+    pAge        = models.IntegerField(blank=True, null=False)
+    pImage      = models.URLField()
     dID         = models.ForeignKey('login.Doctor', on_delete = models.CASCADE)
 
     def __str__(self):

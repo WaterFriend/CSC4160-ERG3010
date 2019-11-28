@@ -26,7 +26,6 @@ def upload(request,doctorID):  #(request, userID)
         ethnicity   = request.POST.get('ethnicity')
         status      = request.POST.get('status')
         age         = request.POST.get('age')
-        dID         = Doctor.objects.get(dID=doctorID)
         
         message = "You should agree with the upload privacy of Cancer Dection System!"
         if check_box:
@@ -38,11 +37,11 @@ def upload(request,doctorID):  #(request, userID)
                                 if status != "":                                                    #check if user doesn't provide patient's status
                                     if age != None:                                                 #check if user doesn't provide patient's age
                                         if accountType == "Student":
-                                            sid = "0" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
+                                            patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
                                             #print(sid)
-                                            Reg = RegInfo.objects.create(reg_id=userEmail, reg_password=password)
-                                            Stu = Student.objects.create(stu_id=sid, stu_email=userEmail, reg=Reg)
-                                            return redirect('../stu/editor/%s' %sid)
+                                            patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
+                                                                             pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, dID=doctorID)                                            
+                                            #return redirect('../stu/editor/%s' %sid)
                                     else:
                                         message = "Please provide patient's age!"                                                   
                                 else:
