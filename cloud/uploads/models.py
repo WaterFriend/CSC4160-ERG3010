@@ -4,7 +4,7 @@ import uuid
 # Create your models here.
 
 class Patient(models.Model):
-    pID         = models.AutoField(max_length = 15, primary_key=True, )
+    pID         = models.CharField(max_length = 15, primary_key=True)
     pFName      = models.CharField(max_length = 30,  blank=True, null=False)
     pLName      = models.CharField(max_length = 30,  blank=True, null=False)
     pGender     = models.CharField(max_length = 10,  blank=True, null=False)
