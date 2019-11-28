@@ -23,3 +23,7 @@ urlpatterns = [
     path('home/'   , include('home.urls')),
     path('result/' , include('result.urls')),
 ]
+
+
+
+
