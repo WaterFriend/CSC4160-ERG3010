@@ -31,8 +31,6 @@ def register(request):
         else:
             messages.info(request, 'Passwords do not match!')
             return redirect('register')
-
-
     else:
         return render(request, 'register.html')
 
