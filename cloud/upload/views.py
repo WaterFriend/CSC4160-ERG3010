@@ -56,6 +56,6 @@ def upload(request,doctorID):  #(request, userID)
                     message = "The patient had already exist!"
             else:
                 message = "Please provide patient's full name!"
-        return render(request, 'reg/register.html', {"message": message})
-    return render(request, 'reg/register.html')
+        return render(request, 'upload/upload.html', {"message": message})
+    return render(request, 'upload/upload.html')
 
