@@ -17,21 +17,19 @@ def register(request):
         email     = request.POST['email']
 
         if username != "":                                                      #check if user provide account name
-            if Doctor.objects.filter(dAccount=username).exists() == False:      #check if the account had existed
+            if User.objects.filter(username=username).exists() == False:        #check if the account had existed
                 if password1 == password2:                                      #check if the two passwords are differents 
                     doctorID = "d" + time.strftime("%Y%m%d%H%M%S", time.localtime())
                     #print(dID)
-                    Doc = Doctor.objects.create(dID=doctorID, dAccount=username, dPassword=password1)
+                    Doc  = Doctor.objects.create(dID=doctorID, dAccount=username, dPassword=password1)
+                    User = User.objects.create_user(username=username, password=password1)
                     return redirect('../home/%s' %dID)                                                      
                 else:
-                    message = "Your passwords are not match, please try again."
+                    message = "Your passwords does not match, please try again."
             else:
                 message = "The account is already exist!"
         else:
             message = "Please enter Your account name!"
-
-
-
 
         '''
         if password1 == password2:
@@ -60,15 +58,15 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password1)
+        User = auth.authenticate(username=username, password=password)
 
-        if user is not None:
-            auth.login(request, user)
-            return redirect('result_list')
+        if User is not None:
+            auth.login(request, User)
+            Doc = Doctor.objects.get(dAccount=userEmail)
+            return redirect('../home/%s' %Doc.dID)
         else:
-            messages.info(request, "Username or password do not exist.")
+            messages.info(request, "Username does not exist.or incorrect password!")
             return redirect('login')
-
     else:
         return render(request, 'login.html')
 
