@@ -75,7 +75,7 @@ ul {
 
 
 
-@media screen and (min-height: 812px, max-height: 1440px){
+@media screen and (min-height: 812px){
     .welcome-user {
         position: relative;
         margin-left: 7.5rem;
