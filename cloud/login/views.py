@@ -1,21 +1,39 @@
+import time
 from django.shortcuts           import render
-
-# Create your views here.
 from django.shortcuts           import render, redirect
 from django.contrib.auth        import logout
 from django.contrib.auth.models import User, auth
+from django.http                import HttpResponseRedirect, HttpResponse
 from django.contrib             import messages
 from .models                    import Doctor
 
 def register(request):
     if request.method == "POST":
         firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        username = request.POST['username']
+        lastname  = request.POST['lastname']
+        username  = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        email = request.POST['email']
+        email     = request.POST['email']
 
+        if username != "":                                                      #check if user provide account name
+            if Doctor.objects.filter(dAccount=username).exists() == False:      #check if the account had existed
+                if password1 == password2:                                      #check if the two passwords are differents 
+                    doctorID = "d" + time.strftime("%Y%m%d%H%M%S", time.localtime())
+                    #print(dID)
+                    Doc = Doctor.objects.create(dID=doctorID, dAccount=username, dPassword=password1)
+                    return redirect('../home/%s' %dID)                                                      
+                else:
+                    message = "Your passwords are not match, please try again."
+            else:
+                message = "The account is already exist!"
+        else:
+            message = "Please enter Your account name!"
+
+
+
+
+        '''
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username is taken!')
@@ -31,6 +49,8 @@ def register(request):
         else:
             messages.info(request, 'Passwords do not match!')
             return redirect('register')
+        '''
+
     else:
         return render(request, 'register.html')
 
