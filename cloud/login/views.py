@@ -16,6 +16,8 @@ def register(request):
         password2 = request.POST['password2']
         email     = request.POST['email']
 
+        global User
+
         if username != "":                                                      #check if user provide account name
             if User.objects.filter(username=username).exists() == False:        #check if the account had existed
                 if password1 == password2:                                      #check if the two passwords are differents 
@@ -23,7 +25,7 @@ def register(request):
                     #print(dID)
                     Doc  = Doctor.objects.create(dID=doctorID, dAccount=username, dPassword=password1)
                     User = User.objects.create_user(username=username, password=password1)
-                    return redirect('../home/%s' %dID)                                                      
+                    return redirect('login')                                                      
                 else:
                     message = "Your passwords does not match, please try again."
             else:
@@ -62,7 +64,7 @@ def login_view(request):
 
         if User is not None:
             auth.login(request, User)
-            Doc = Doctor.objects.get(dAccount=userEmail)
+            Doc = Doctor.objects.get(dAccount=username)
             return redirect('../home/%s' %Doc.dID)
         else:
             messages.info(request, "Username does not exist.or incorrect password!")
