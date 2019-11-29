@@ -9,14 +9,30 @@ from django.db.models               import Q
 from django.views.decorators.csrf   import csrf_exempt
 
 # Create your views here.
+from upload.models                  import Patient
 
 @csrf_exempt
 def result(request, doctorID, patientID):
     if request.method == "GET":
+        patient     = Patient.objects.get(pID = patientID)
+        firstName   = patient.pFName
+        lastName    = patient.pLName
+        gender      = patient.pGender
+        race        = patient.pRace
+        ethnicity   = patient.pEthnicity
+        status      = patient.pStatus
+        remark      = patient.pRemark
+        age         = patient.pAge
+
         content = {
-            'uploadLink'  : "../upload/" + doctorID,
+            'firstName' : firstName,
+            'lastName'  : lastName,
+            'gender'    : gender,
+            'race'      : race,
+            'ethnicity' : ethnicity,
+            'status'    : status,
+            'remark'    : remark,
+            'age'       : age,
         }
-        return render(request, 'home.html', content)  
-    elif request.method == "POST":   
-        logout(request) 
-        return redirect('../login/login')
+
+        #return render(request, 'home.html', content)  #TODO
