@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts           import render
 
 # Create your views here.
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout
+from django.shortcuts           import render, redirect
+from django.contrib.auth        import logout
 from django.contrib.auth.models import User, auth
-from django.contrib import messages
-from .models import Doctor
+from django.contrib             import messages
+from .models                    import Doctor
 
 def register(request):
     if request.method == "POST":
@@ -34,10 +34,11 @@ def register(request):
     else:
         return render(request, 'register.html')
 
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST['username']
-        password1 = request.POST['password1']
+        password = request.POST['password']
 
         user = auth.authenticate(username=username, password=password1)
 
