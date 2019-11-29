@@ -26,7 +26,7 @@
               
               {% if user.is_authenticated %}
               <li class="nav-item">
-                  <form  method = "POST"></form>
+                  <form  method = "POST">
                   {% csrf_token %}
                     <button type = "submit" class = "btn">Logout</button>
                   </form>
@@ -37,7 +37,7 @@
                 
 
               <li class="nav-item">
-                  <a href={{uploadLink}} class="btn btn-info" id = "btn-circle">Upload</a>
+                  <a class="btn btn-info" id = "btn-circle"  href={{uploadLink}}>Upload</a>
               </li>
             </ul>
           </div>
@@ -48,7 +48,7 @@
         
     </div>
 
-    <a href={{uploadLink}} class="btn btn-info" id = "btn-circle">Upload Scan</a>
+    <a class="btn btn-info" id = "btn-circle" href={{uploadLink}} >Upload Scan</a>
 
     {% if user.is_authenticated %}
       <div class = "welcome-user"><h3>Welcome back, Dr. {{user.username}}</h3><br></div> 
