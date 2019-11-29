@@ -14,7 +14,8 @@ def result_list(request, doctorID):
         content = {}
         homeLink = "../" + doctorID
         loginLink = "../login/login"
-        uploadLink = "../upload"
+        uploadLink = "../upload" + doctorID
         return render(request, 'home.html', content)  
-    elif request.method == "POST":    
-        return redirect('../login/login')
+    elif request.method == "POST":   
+        logout(request) 
+        return redirect('../login')
