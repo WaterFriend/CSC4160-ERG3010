@@ -36,3 +36,7 @@ def result(request, doctorID, patientID):
         }
 
         #return render(request, 'home.html', content)  #TODO
+        
+    elif request.method == "POST":   
+        logout(request) 
+        return redirect('../login/login')
