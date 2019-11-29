@@ -10,5 +10,5 @@ from django.views.decorators.csrf   import csrf_exempt
 
 @csrf_exempt
 def result_list(request, doctorID):
-    content = []
+    content = {}
     return render(request, 'base.html', content)      

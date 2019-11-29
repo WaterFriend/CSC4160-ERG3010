@@ -65,7 +65,7 @@ def login_view(request):
         if User is not None:
             auth.login(request, User)
             Doc = Doctor.objects.get(dAccount=username)
-            return redirect('../../home/%s' %Doc.dID)
+            return redirect('../../home/base/%s' %Doc.dID)
         else:
             messages.info(request, "Username does not exist.or incorrect password!")
             return redirect('login')
