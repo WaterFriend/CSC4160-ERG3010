@@ -17,8 +17,6 @@ import os
 def result_list(request, doctorID):
     if request.method == "GET":
         content = {
-            'homeLink'    : "../" + doctorID,
-            'loginLink'   : "../login/login",
             'uploadLink'  : "../upload/" + doctorID,
         }
         return render(request, 'home.html', content)  
