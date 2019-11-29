@@ -10,5 +10,11 @@ from django.views.decorators.csrf   import csrf_exempt
 
 @csrf_exempt
 def result_list(request, doctorID):
-    content = {}
-    return render(request, 'base.html', content)      
+    if request.method == "GET":
+        content = {}
+        homeLink = "../" + doctorID
+        loginLink = "../login/login"
+        uploadLink = "../upload"
+        return render(request, 'home.html', content)  
+    elif request.method == "POST":    
+        return redirect('../login/login')

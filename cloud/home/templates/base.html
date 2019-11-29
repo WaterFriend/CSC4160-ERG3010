@@ -14,7 +14,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark mb-4 justify-content-between" style="background-color:#000000">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'result_list' %}">CANCER DETECTION SYSTEM</a>
+          <a class="navbar-brand" href={{homeLink}}>CANCER DETECTION SYSTEM</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -26,7 +26,7 @@
               
               {% if user.is_authenticated %}
               <li class="nav-item">
-                  <form action = "{% url 'logout' %}" method = "post">
+                    <form  method = "post"></form>
                     {% csrf_token %}
                     <button type = "submit" class = "btn">Logout</button>
                   </form>
@@ -37,7 +37,7 @@
                 
 
               <li class="nav-item">
-                  <a href="{% url 'upload_book' %}" class="btn btn-info" id = "btn-circle">Upload</a>
+                  <a href={{uploadLink}} class="btn btn-info" id = "btn-circle">Upload</a>
               </li>
             </ul>
           </div>
@@ -48,10 +48,10 @@
         
     </div>
 
-    <a href="{% url 'upload_book' %}" class="btn btn-info" id = "btn-circle">Upload Scan</a>
+    <a href={{uploadLink}} class="btn btn-info" id = "btn-circle">Upload Scan</a>
 
     {% if user.is_authenticated %}
-      <div class = "welcome-user"><h3>Welcome back, Dr. {{user.first_name}}</h3><br></div> 
+      <div class = "welcome-user"><h3>Welcome back, Dr. {{user.username}}</h3><br></div> 
     {% endif %}
 
     <div class="container" id="container-body">

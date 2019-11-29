@@ -4,6 +4,7 @@ from . import views
 #from .views import SearchResultsView
 
 urlpatterns = [
-    path('base/<str:doctorID>', views.result_list, name = 'result_list'),
+    path('<str:doctorID>', views.result_list, name = 'result_list'),
+    #path('home/<str:doctorID>', views.result_list, name = 'result_list'),
     #path('search/', SearchResultsView.as_view(), name='search_result'),
 ]
