@@ -7,6 +7,8 @@ from django.contrib                 import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models               import Q
 from django.views.decorators.csrf   import csrf_exempt
+from upload.models                  import Patient
+
 import json
 import time
 import os
@@ -16,7 +18,9 @@ import os
 @csrf_exempt
 def result_list(request, doctorID):
     if request.method == "GET":
+        patients = Patient.objects.all()
         content = {
+            'patients' : patients,
             'uploadLink'  : "../upload/" + doctorID,
         }
         return render(request, 'home.html', content)  
