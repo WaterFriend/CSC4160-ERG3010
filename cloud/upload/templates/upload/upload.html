@@ -24,6 +24,7 @@
             Your DoctorID: {{doctorID}}
         </div><br>
         <form>
+            {% csrf_token %}
             First name: 
             <input type="text" name = "patient_fname" class="form-control">
             Second Name: 
@@ -136,6 +137,7 @@
                     'doctorID'    : doctorID.nodeValue
                     };
                 $.post(img_update_URL, data, function (response) {
+                    results.innerHTML = 'Calling function!!!!!'
                     if (response === 'success') {
                         //document.getElementById("uploaded-img").src = "imgURL";
                         results.innerHTML = 'modify database succeed!!!!!!'
