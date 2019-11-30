@@ -44,6 +44,8 @@ def upload(request,doctorID):  #(request, userID)
                                     #print(sid)
                                     patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                         pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
+                                    print("update database succeed!!!!!!!!!!!!!")
+                                    message = "update database succeed!!!!!!!!!!!!!"
                                     return redirect('../home/%s' %doctorID)
                                 else:
                                     message = "Please provide patient's age!"                                                   
