@@ -10,7 +10,7 @@ from django.contrib               import messages
 from django.db.models             import Q
 
 # Create your views here.
-from .forms import PatientForm, PForm
+from .forms         import PatientForm, PForm
 from .models        import Patient
 from login.models   import Doctor
 # from .forms import InfoForm
@@ -46,7 +46,7 @@ def upload(request,doctorID):  #(request, userID)
                                         #print(sid)
                                         patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                             pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
-                                        #return redirect('../stu/editor/%s' %sid)
+                                        return redirect('../home/%s' %doctorID)
                                 else:
                                     message = "Please provide patient's age!"                                                   
                             else:
