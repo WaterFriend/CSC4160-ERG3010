@@ -19,6 +19,9 @@
     </head>
     
     <body>
+        <div id="doctorID">
+            Your DoctorID: {{doctorID}}
+        </div><br>
         <form>
             Patient ID: 
             <input type="text" name = "patient_id" class="form-control">
@@ -64,7 +67,8 @@
                 }
             });
             var imgURL;
-            var img_update_URL = "{% url 'upload' doctorID%}";
+            var img_update_URL = "{% url 'upload' doctorID %}";
+            var doctorID    = document.getElementById('doctorID');
             var patientID   = document.getElementsByName('patient_id');
             var fName       = document.getElementsByName('patient_fname');
             var lName       = document.getElementsByName('patient_lname');
@@ -131,7 +135,8 @@
                     'status'      : status[0].nodeValue,
                     'age'         : age[0].nodeValue,
                     'remark'      : remark[0].nodeValue,
-                    'imgURL'      : imgURL
+                    'imgURL'      : imgURL,
+                    'doctorID'    : doctorID.nodeValue
                     };
                 $.post(img_update_URL, data, function (response) {
                     if (response === 'success') {
