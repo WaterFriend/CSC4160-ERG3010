@@ -13,12 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static","css"),
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 # Quick-start development settings - unsuitable for production
@@ -127,14 +128,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
 
 
 # Get connection to the AWS S3 bucket
