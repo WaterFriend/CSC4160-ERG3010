@@ -26,7 +26,7 @@ def result_list(request, doctorID):
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
             }
-            return render(request, 'home.html')
+            return render(request, 'home.html', content)
         else:
             patientList = Patient.objects.all()
             content = {
