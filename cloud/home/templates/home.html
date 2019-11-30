@@ -6,7 +6,7 @@
 
 {% block content %}
 
-      
+<form method="get" class= "search-form">  
       <div class="form-row">
           <div class="form-group col-md-2 col-lg-2">
               <div class="input-group">
@@ -21,15 +21,16 @@
           </div>
 
           <div class="form-group col-md-4 col-lg-4">
-              <select id="category" class="form-control" name="category">
+              <select id="category" class="form-control" name="gender">
                 <option selected>Gender...</option>
-                <option value="{{ cat }}">{{ cat }}</option>
+                <option value="male" name = "gender_male">Male</option>
+                <option value="female" name = "gender_female">Female</option>
               </select>
           </div>
       
           <div class="form-group col-md-2 col-lg-2">
               <div class="input-group">
-                  <input class="form-control py-2 border-right-0 border" type="search" name="Age" placeholder="Age.." />
+                  <input class="form-control py-2 border-right-0 border" type="search" name="age" placeholder="Age.." />
                   <span class="input-group-append">
                       <div class="input-group-text bg-transparent">
                           <i class="fa fa-search"></i>
@@ -37,14 +38,8 @@
                   </span>
               </div>
           </div>
-          <div class="form-group col-md-4 col-lg-4">
-              <select id="category" class="form-control" name="category">
-                <option selected>Choose Doctor...</option>
-                {% for cat in categories %}
-                <option value="{{ cat }}">{{ cat }}</option>
-                {% endfor %}
-              </select>
-            </div>
+
+          <button type="submit" class="btn btn-black" name = "search">Search</button>
       </div>
         
     <!--</form>

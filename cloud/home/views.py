@@ -15,7 +15,17 @@ from upload.models      import Patient
 @csrf_exempt
 def result_list(request, doctorID):
     if request.method == "GET":
-        if '' in request.GET:
+        if 'search' in request.GET:
+            patientList = Patient.objects.all()
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            gender = request.POST.get('gender')
+            age = request.POST.get('age')
+            
+            content = {
+                'uploadLink'  : "../upload/" + doctorID,
+                'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
+            }
             return render(request, 'home.html')
         else:
             patientList = Patient.objects.all()
