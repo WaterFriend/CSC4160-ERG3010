@@ -13,12 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static","css"),
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 # Quick-start development settings - unsuitable for production
@@ -129,16 +130,8 @@ USE_L10N = True
 USE_TZ = False
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
-
-
 # Get connection to the AWS S3 bucket
-
+'''
 AWS_ACCESS_KEY_ID = 'AKIASKKR5242U53BQZ5C'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = '4160-project'
@@ -148,7 +141,9 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
+
 AWS_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 DEFAULT_FILE_STORAGE = 'cloud.storage_backends.ImageStorage'  # <-- here is where we reference it
+
+'''
