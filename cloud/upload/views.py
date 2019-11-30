@@ -33,7 +33,6 @@ def upload(request,doctorID):  #(request, userID)
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
         
-        message = "You should agree with the upload privacy of Cancer Dection System!"
         if fName != "" and lName != "":                                                         #check if user doesn't provide patient's full name
             if Patient.objects.filter(Q(pFName=fName) | Q(pLName=lName)).exists() == False:     #check if the patient had existed  
                 if gender != "":                                                                #check if user doesn't provide patient's gender 
