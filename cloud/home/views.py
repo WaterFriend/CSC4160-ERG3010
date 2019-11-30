@@ -25,6 +25,9 @@ def result_list(request, doctorID):
         return render(request, 'home.html', content)  
     
     
-    elif request.method == "POST":   
-        logout(request) 
-        return redirect('../login/login')
+    elif request.method == "POST":
+        if 'logout' in request.POST:   
+            logout(request) 
+            return redirect('../login/login')
+        elif '' in request.POST:
+            return redirect('../result/%s/%s' %doctorID, %patientID)
