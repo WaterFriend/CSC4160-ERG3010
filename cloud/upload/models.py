@@ -5,7 +5,7 @@ import uuid
 
 class Patient(models.Model):
     pID         = models.CharField(max_length = 15, primary_key=True)
-    pFName      = models.CharField(max_length = 30,  blank=True, null=False)
+    pFName      = models.CharField(max_length = 30,  blank=True, null=True)
     pLName      = models.CharField(max_length = 30,  blank=True, null=False)
     pGender     = models.CharField(max_length = 10,  blank=True, null=False)
     pRace       = models.CharField(max_length = 20,  blank=True, null=False)
