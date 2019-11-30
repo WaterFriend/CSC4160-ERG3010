@@ -1,80 +1,146 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <title>AWS S3 File Upload</title>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
-</head>
+{% load staticfiles %}
 
-<body>
-    <input type="file" id="file-chooser" />
-    <button id="upload-button">Upload to S3</button>
-    <div id="results"></div>
-    <script type="text/javascript">
-        AWS.config.region = 'us-east-2'; // 1. Enter your region
+{% load static %}
 
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-2:e8396e87-819c-4ebd-abd5-5e54faa00fd2' // 2. Enter your identity pool
-        });
+{% block content %}
 
-        AWS.config.credentials.get(function(err) {
-            if (err) alert(err);
-            console.log(AWS.config.credentials);
-        });
+{% load crispy_forms_tags %}
 
-        var bucketName = '4160-project'; // Enter your bucket name
-        var bucket = new AWS.S3({
-            params: {
-                Bucket: bucketName
-            }
-        });
+    <head>
+        <title>AWS S3 File Upload</title>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/before.css' %}" type="text/css">
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+    </head>
+    
+    <body>
+        <form>
+            Patient ID: 
+            <input type="text" name = "patient_id" class="form-control">
+            First name: 
+            <input type="text" name = "patient_fname" class="form-control">
+            Second Name: 
+            <input type="text" name = "patient_lname" class="form-control" >
+            <br>Gender: <br>
+            <input type="radio" name="patient_gender" value="male"> Male<br>
+            <input type="radio" name="patient_gender" value="female"> Female<br>
+            <input type="radio" name="patient_gender" value="other"> Other<br>
+            Age: 
+            <input type="text" name = "patient_age" class="form-control">
+            Race: 
+            <input type="text" name = "patient_race" class="form-control">
+            Ethnicity: 
+            <input type="text" name = "patient_ethnicity" class="form-control">
+            Status: 
+            <input type="text" name = "patient_status" class="form-control">
+            Remark: 
+            <input type="text" name = "patient_remark" class="form-control">
 
-        var fileChooser = document.getElementById('file-chooser');
-        var button = document.getElementById('upload-button');
-        var results = document.getElementById('results');
-        button.addEventListener('click', function() {
-
-            var file = fileChooser.files[0];
-
-            if (file) {
-
-                results.innerHTML = '';
-                var objKey = 'testing/' + file.name;
-                var params = {
-                    Key: objKey,
-                    ContentType: file.type,
-                    Body: file,
-                    ACL: 'public-read'
-                };
-
-                bucket.putObject(params, function(err, data) {
+            <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/>
+        </form>
+        <button id="upload-button" class = "btn btn-xs btn-outline-primary mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button>
+        <div id="results">
+            <img src="showanalysis.jpg" alt="No image uploaded yet" id="uploadedimg" style="max-width: 350px; height: auto; ">
+        </div>
+    
+        <script type="text/javascript">
+            AWS.config.region = 'us-east-2'; // 1. Enter your region
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: 'us-east-2:e8396e87-819c-4ebd-abd5-5e54faa00fd2' // 2. Enter your identity pool
+            });
+            AWS.config.credentials.get(function(err) {
+                if (err) alert(err);
+                console.log(AWS.config.credentials);
+            });
+            var bucketName = '4160-project'; // Enter your bucket name
+            var bucket = new AWS.S3({
+                params: {
+                    Bucket: bucketName
+                }
+            });
+            var imgURL;
+            var img_update_URL = "{% url 'upload' doctorID%}";
+            var patientID   = document.getElementsByName('patient_id');
+            var fName       = document.getElementsByName('patient_fname');
+            var lName       = document.getElementsByName('patient_lname');
+            var gender      = document.getElementsByName('patient_gender');
+            var race        = document.getElementsByName('patient_race');
+            var ethnicity   = document.getElementsByName('patient_ethnicity');
+            var status      = document.getElementsByName('patient_status');
+            var age         = document.getElementsByName('patient_age');
+            var remark      = document.getElementsByName('patient_remark');
+            var fileChooser = document.getElementById('file-chooser');
+            var button = document.getElementById('upload-button'); // The button is in the base.html
+            var results = document.getElementById('results');
+            
+            button.addEventListener('click', function() {
+                var file = fileChooser.files[0];
+                if (file) {
+                    results.innerHTML = '';
+                    var objKey = 'testing/' + file.name;
+                    var params = {
+                        Key: objKey,
+                        ContentType: file.type,
+                        Body: file,
+                        ACL: 'public-read'
+                    };
+                    imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
+    
+                    bucket.putObject(params, function(err, data) {
+                        if (err) {
+                            results.innerHTML = 'ERROR: ' + err;
+                        } else {
+                            listObjs();
+                            patientInfo();
+                        }
+                    });
+                } else {
+                    results.innerHTML = 'Nothing to upload.';
+                }
+            }, false);
+            function listObjs() {
+                var prefix = 'testing';
+                bucket.listObjects({
+                    Prefix: prefix
+                }, function(err, data) {
                     if (err) {
                         results.innerHTML = 'ERROR: ' + err;
                     } else {
-                        listObjs();
+                        var objKeys = "";
+                        data.Contents.forEach(function(obj) {
+                            objKeys += obj.Key + "<br>";
+                        });
+                        results.innerHTML = objKeys;
+                        document.getElementById("uploaded-img").src = imgURL;
                     }
                 });
-            } else {
-                results.innerHTML = 'Nothing to upload.';
             }
-        }, false);
-        function listObjs() {
-            var prefix = 'testing';
-            bucket.listObjects({
-                Prefix: prefix
-            }, function(err, data) {
-                if (err) {
-                    results.innerHTML = 'ERROR: ' + err;
-                } else {
-                    var objKeys = "";
-                    data.Contents.forEach(function(obj) {
-                        objKeys += obj.Key + "<br>";
-                    });
-                    results.innerHTML = objKeys;
-                }
-            });
-        }
-    </script>
-</body>
-
-</html>
+            function patientInfo() {
+                var data = {
+                    'patientID'   : patientID[0].nodeValue,
+                    'fName'       : fName[0].nodeValue,
+                    'lName'       : lName[0].nodeValue,
+                    'gender'      : gender[0].nodeValue,
+                    'race'        : race[0].nodeValue,
+                    'ethnicity'   : ethnicity[0].nodeValue,
+                    'status'      : status[0].nodeValue,
+                    'age'         : age[0].nodeValue,
+                    'remark'      : remark[0].nodeValue,
+                    'imgURL'      : imgURL
+                    };
+                $.post(img_update_URL, data, function (response) {
+                    if (response === 'success') {
+                        //document.getElementById("uploaded-img").src = "imgURL";
+                    }
+                    else { alert('Uploading Failed due to unknow error!') }
+                });
+            }
+        </script>
+    
+    
+{% endblock %}

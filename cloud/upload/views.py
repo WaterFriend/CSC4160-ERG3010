@@ -10,23 +10,30 @@ from django.contrib               import messages
 from django.db.models             import Q
 
 # Create your views here.
+from .forms import PatientForm, PForm
 from .models        import Patient
 from login.models   import Doctor
 # from .forms import InfoForm
+
+
+def uploadPage(request, doctorID):
+    return render(request, 'upload/upload.html', {"doctorID": doctorID})
 
 
 @csrf_exempt
 def upload(request,doctorID):  #(request, userID)
     if request.method == "POST":
         check_box   = request.POST.getlist('check_box')
-        
+        patientID   = request.POST.get('patientID')
         fName       = request.POST.get('firstName')
         lName       = request.POST.get('lastName')
         gender      = request.POST.get('gender')
         race        = request.POST.get('race')
         ethnicity   = request.POST.get('ethnicity')
         status      = request.POST.get('status')
+        remark      = request.POST.get('remark', 'None')
         age         = request.POST.get('age')
+        imgURL      = request.POST.get('imgURL')
         
         message = "You should agree with the upload privacy of Cancer Dection System!"
         if check_box:
@@ -41,7 +48,7 @@ def upload(request,doctorID):  #(request, userID)
                                             patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
                                             #print(sid)
                                             patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
-                                                                             pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, dID=doctorID)                                            
+                                                                             pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
                                             #return redirect('../stu/editor/%s' %sid)
                                     else:
                                         message = "Please provide patient's age!"                                                   
