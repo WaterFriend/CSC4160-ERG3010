@@ -51,27 +51,16 @@
 <table class="table table-hover table-responsive-sm">
     <thead class = "thead-dark"> 
       <tr>
-        <th>Cover</th>
-        <th>Title</th>
-        <th>Download</th>
+        <th>Patient ID</th>
+        <th>Patient Name</th>
+
       </tr>
     </thead>
     <tbody>
-      {% for book in books %}
+      {% for patients in patient %}
         <tr>
-          <td>
-            {% if book.cover %}
-              <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width:100px;">
-            {% else %}
-              <span class="text-muted">No cover</span>
-            {% endif %}
-          </td>
-          <td>{{ book.title }}</td>
-          <td>
-            <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
-              Download PDF
-            </a>
-          </td>
+          <td>{{ patients.pID }}</td>
+          <td>{{ patients.pFName }}{{ patients.pLName }}</td>
         </tr>
       {% endfor %}
     </tbody>
