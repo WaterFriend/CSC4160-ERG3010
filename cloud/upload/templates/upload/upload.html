@@ -19,12 +19,11 @@
     </head>
     
     <body>
+        <h1>Patient Form</h1>
         <div id="doctorID">
             Your DoctorID: {{doctorID}}
         </div><br>
         <form>
-            Patient ID: 
-            <input type="text" name = "patient_id" class="form-control">
             First name: 
             <input type="text" name = "patient_fname" class="form-control">
             Second Name: 
@@ -69,7 +68,6 @@
             var imgURL;
             var img_update_URL = "{% url 'upload' doctorID %}";
             var doctorID    = document.getElementById('doctorID');
-            var patientID   = document.getElementsByName('patient_id');
             var fName       = document.getElementsByName('patient_fname');
             var lName       = document.getElementsByName('patient_lname');
             var gender      = document.getElementsByName('patient_gender');
@@ -126,7 +124,6 @@
             }
             function patientInfo() {
                 var data = {
-                    'patientID'   : patientID[0].nodeValue,
                     'fName'       : fName[0].nodeValue,
                     'lName'       : lName[0].nodeValue,
                     'gender'      : gender[0].nodeValue,
