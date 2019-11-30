@@ -48,15 +48,14 @@
     {% if user.is_authenticated %}
       <div class = "welcome-user"><h3>Welcome back, Dr. {{user.username}}</h3><br></div> 
     {% endif %}
-
-    {% block content %}
-    {% endblock %}                
+              
     <div class="container" id="container-body">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-12">
             <div class="card mb-4" id="container-body-inner">
               <div class="card-body">
-                  
+                {% block content %}
+                {% endblock %} 
               </div>
             </div>
           </div>
