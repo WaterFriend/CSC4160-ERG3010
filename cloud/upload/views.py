@@ -60,5 +60,5 @@ def upload(request,doctorID):  #(request, userID)
         else:
             message = "Please provide patient's full name!"
     
-    return render(request, 'upload/upload.html')
+    return HttpRepsonse('FAIL!!!!!')
 
