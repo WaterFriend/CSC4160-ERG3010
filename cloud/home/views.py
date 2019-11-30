@@ -15,14 +15,15 @@ from upload.models      import Patient
 @csrf_exempt
 def result_list(request, doctorID):
     if request.method == "GET":
-        patientList = Patient.objects.all()
-
-
-        content = {
-            'uploadLink'  : "../upload/" + doctorID,
-            'patient'     : patientList.filter(dID=doctorID)
-        }
-        return render(request, 'home.html', content)  
+        if '' in request.GET:
+            return render(request, 'home.html')
+        else:
+            patientList = Patient.objects.all()
+            content = {
+                'uploadLink'  : "../upload/" + doctorID,
+                'patient'     : patientList.filter(dID=doctorID)
+            }
+            return render(request, 'home.html', content)  
     
     
     elif request.method == "POST":
@@ -30,4 +31,5 @@ def result_list(request, doctorID):
             logout(request) 
             return redirect('../login/login')
         elif '' in request.POST:
-            return redirect('../result/%s/%s' %doctorID, %patientID)
+            patientID
+            return redirect('../result/%s' %doctorID)
