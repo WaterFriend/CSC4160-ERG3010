@@ -41,12 +41,11 @@ def upload(request,doctorID):  #(request, userID)
                         if ethnicity != "":                                                     #check if user doesn't provide patient's ethnicity
                             if status != "":                                                    #check if user doesn't provide patient's status
                                 if age != None:                                                 #check if user doesn't provide patient's age
-                                    if accountType == "Student":
-                                        patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
-                                        #print(sid)
-                                        patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
-                                                                            pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
-                                        return redirect('../home/%s' %doctorID)
+                                    patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
+                                    #print(sid)
+                                    patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
+                                                                        pRace=race, pEthnicity=ethnicity, pStatus=status, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
+                                    return redirect('../home/%s' %doctorID)
                                 else:
                                     message = "Please provide patient's age!"                                                   
                             else:
