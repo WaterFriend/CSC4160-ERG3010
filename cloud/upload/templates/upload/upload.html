@@ -47,7 +47,7 @@
         </form>
         <button id="upload-button" class = "btn btn-xs btn-outline-primary mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button>
         <div id="results">
-            <img src="showanalysis.jpg" alt="No image uploaded yet" id="uploaded-img" style="max-width: 350px; height: auto; ">
+            <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
     
         <script type="text/javascript">
@@ -117,7 +117,7 @@
                         ACL: 'public-read'
                     };
                     imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
-    
+                    results.innerHTML = 'Uplaoding Image. Please wait~';
                     bucket.putObject(params, function(err, data) {
                         if (err) {
                             results.innerHTML = 'ERROR: ' + err;
@@ -126,6 +126,7 @@
                             patientInfo();
                         }
                     });
+                    results.innerHTML = 'Image Uplaoded. Image recognition could take some time, please wait patiently';
                 } else {
                     results.innerHTML = 'Nothing to upload.';
                 }

@@ -5,7 +5,7 @@ import uuid
 
 class Patient(models.Model):
     pID         = models.CharField(max_length = 15, primary_key=True)
-    pFName      = models.CharField(max_length = 30,  blank=True, null=True)
+    pFName      = models.CharField(max_length = 30,  blank=True, null=False)
     pLName      = models.CharField(max_length = 30,  blank=True, null=False)
     pGender     = models.CharField(max_length = 10,  blank=True, null=False)
     pRace       = models.CharField(max_length = 20,  blank=True, null=False)
@@ -14,6 +14,7 @@ class Patient(models.Model):
     pRemark     = models.CharField(max_length = 255, blank=True, null=True)
     pAge        = models.IntegerField(blank=True, null=False)
     pImage      = models.URLField()
+    resultImg   = models.URLField(null=True)
     dID         = models.ForeignKey('login.Doctor', on_delete = models.CASCADE)
 
     def __str__(self):

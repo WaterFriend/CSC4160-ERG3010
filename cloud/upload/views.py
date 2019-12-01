@@ -8,12 +8,16 @@ from django.http                  import HttpResponseRedirect, HttpResponse
 from django.shortcuts             import render, redirect
 from django.contrib               import messages
 from django.db.models             import Q
+from django.conf import settings
 
 # Create your views here.
 from .forms         import PatientForm, PForm
 from .models        import Patient
 from login.models   import Doctor
 # from .forms import InfoForm
+
+#import model code
+#from .model.cancer_detection_url import process_image
 
 @csrf_exempt
 def uploadPage(request, doctorID):
@@ -28,7 +32,7 @@ def uploadPage(request, doctorID):
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
         doc = Doctor.objects.get(dID = doctorID)
-        print(request.POST)
+        print(settings.AWS_ACCESS_KEY_ID)
 
         if fName != "" and lName != "":                                                         #check if user doesn't provide patient's full name
             if gender != "":                                                                #check if user doesn't provide patient's gender 
@@ -41,9 +45,11 @@ def uploadPage(request, doctorID):
                                 print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                     pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)                                            
-                                print("update database succeed!!!!!!!!!!!!!")
-                                message = "update database succeed!!!!!!!!!!!!!"
-                                return redirect('../home/%s' %doctorID)
+                                print("update database succeed!!")
+                                homeURL = '/home/'+str(doctorID)+'/'
+                                #resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
+                                patient.update(resultImg=resultIMG)             # change the resultImg of the instance
+                                return redirect(homeURL)
                             else:
                                 message = "Please provide patient's age!"                                                   
                         else:
@@ -59,7 +65,7 @@ def uploadPage(request, doctorID):
     else:
         return render(request, 'upload/upload.html', {"doctorID": doctorID})
     
-    return HttpRepsonse('FAIL!!!!!')
+    return redirect(homeURL)
 
 
 @csrf_exempt
@@ -89,7 +95,8 @@ def upload(request):  #(request, userID)
                                                                         pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
                                     print("update database succeed!!!!!!!!!!!!!")
                                     message = "update database succeed!!!!!!!!!!!!!"
-                                    return redirect('../home/%s' %doctorID)
+                                    homeURL = '/home/'+doctorID+'/'
+                                    return redirect(homeURL)
                                 else:
                                     message = "Please provide patient's age!"                                                   
                             else:
@@ -105,5 +112,5 @@ def upload(request):  #(request, userID)
         else:
             message = "Please provide patient's full name!"
     
-    return HttpRepsonse('FAIL!!!!!')
+    return redirect(homeURL)
 
