@@ -39,8 +39,10 @@
               </span>
           </div>
       </div>
-
-      <button type="submit" class="btn btn-black" name = "search">Search</button>
+      <div class="form-group col-md-2 col-lg-2">
+        <button type="submit" class="btn btn-black" name = "search">Search</button>
+      </div>
+      
   </div>       
 </form>
 
@@ -54,6 +56,7 @@
       <tr>
         <th>Patient ID</th>
         <th>Patient Name</th>
+        <th>View Record</th>
 
       </tr>
     </thead>
@@ -63,13 +66,13 @@
       {% for patients in patient %}
         <tr>
           <td>{{ patients.pID }}</td>
-          <td>{{ patients.pFName }}{{ patients.pLName }}</td>
+          <td>{{ patients.pFName }} {{ patients.pLName }}</td>
           <td>
             <!-- TO DO: BUTTON! -->
             <form action = "{% url 'view_detail' %}" method = "post">
                 <input type = "hidden" name = "patientID" value = "{{ patients.pID }}">
                 <input type = "hidden" name = "doctorID" value = "{{ doctorID }}">
-                <button type = "submit" class = "btn" name="view">View</button>
+                <button type = "submit" class = "btn btn-primary" name="view">View</button>
             </form>
             </a>
           </td>

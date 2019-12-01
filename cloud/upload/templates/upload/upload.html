@@ -6,8 +6,6 @@
 
 {% block content %}
 
-{% load crispy_forms_tags %}
-
     <head>
         <title>AWS S3 File Upload</title>
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
@@ -24,28 +22,21 @@
         </div><br>
         <form>
             {% csrf_token %}
-            First name: 
-            <input type="text" id = "patient_fname" class="form-control">
-            Second Name: 
-            <input type="text" id = "patient_lname" class="form-control" >
-            <br>Gender: <br>
+            <input type="text" id = "patient_fname" class="form-control" placeholder="First Name"><br>
+            <input type="text" id = "patient_lname" class="form-control" placeholder="Last Name"><br>
+            Gender: <br>
             <input type="radio" id="patient_gender" value="male"> Male<br>
             <input type="radio" id="patient_gender" value="female"> Female<br>
-            <input type="radio" id="patient_gender" value="other"> Other<br>
-            Age: 
-            <input type="text" id = "patient_age" class="form-control">
-            Race: 
-            <input type="text" id = "patient_race" class="form-control">
-            Ethnicity: 
-            <input type="text" id = "patient_ethnicity" class="form-control">
-            Status: 
-            <input type="text" id = "patient_status" class="form-control">
-            Remark: 
-            <input type="text" id = "patient_remark" class="form-control">
+            <input type="radio" id="patient_gender" value="other"> Other<br><br>
+            <input type="text" id = "patient_age" class="form-control" placeholder="Age"><br>
+            <input type="text" id = "patient_race" class="form-control" placeholder="Race"><br>
+            <input type="text" id = "patient_ethnicity" class="form-control" placeholder="Ethnicity"><br>
+            <input type="text" id = "patient_status" class="form-control" placeholder="Status"><br>
+            <input type="text" id = "patient_remark" class="form-control" placeholder = "Remark"><br>
 
-            <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/>
+            <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/><br>
         </form>
-        <button id="upload-button" class = "btn btn-xs btn-outline-primary mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button>
+        <button id="upload-button" class = "btn btn-xs btn-outline-primary mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
