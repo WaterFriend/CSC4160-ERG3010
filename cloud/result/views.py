@@ -33,9 +33,11 @@ def result(request, doctorID, patientID):
             'status'    : status,
             'remark'    : remark,
             'age'       : age,
+            "backLink"  : "../../home/" + doctorID,
+
         }
 
-        #return render(request, 'home.html', content)  #TODO
+        return render(request, 'detailed_preview.html', content)  #TODO
         
     elif request.method == "POST":   
         logout(request) 

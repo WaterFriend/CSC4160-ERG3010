@@ -23,6 +23,7 @@ def result_list(request, doctorID):
         content = {
             'uploadLink'  : "../upload/" + doctorID,
             'patient'     : patientList.filter(dID=doctorID),
+            'doctorID'    : doctorID,
         }
         return render(request, 'home.html', content)  
     elif request.method == "POST":
@@ -54,8 +55,25 @@ def result_list(request, doctorID):
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList,
+                'doctorID'    : doctorID,
             }
             return render(request, 'home.html', content)
         # elif 'upload' in request.POST:
         #     patientID
         #     return redirect('../result/%s' %doctorID)
+
+
+@csrf_exempt
+def view_detail(request):
+    patientID   = request.POST.get('patientID')
+    doctorID   = request.POST.get('doctorID')
+
+    combineID = doctorID + "/" + patientID
+    # content = {
+    #       'patientID' : patientID,
+    # }
+
+    return redirect('../../result/%s' %combineID)
+
+
+

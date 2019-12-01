@@ -58,10 +58,21 @@
       </tr>
     </thead>
     <tbody>
+      {{ docID }}
+
       {% for patients in patient %}
         <tr>
           <td>{{ patients.pID }}</td>
           <td>{{ patients.pFName }}{{ patients.pLName }}</td>
+          <td>
+            <!-- TO DO: BUTTON! -->
+            <form action = "{% url 'view_detail' %}" method = "post">
+                <input type = "hidden" name = "patientID" value = "{{ patients.pID }}">
+                <input type = "hidden" name = "doctorID" value = "{{ doctorID }}">
+                <button type = "submit" class = "btn" name="view">View</button>
+            </form>
+            </a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
