@@ -6,6 +6,8 @@
 
 {% block content %}
 
+<h1>ID {{ id123 }}</h1>
+
 <form method="get" class= "search-form">  
   <div class="form-row">
       <div class="form-group col-md-2 col-lg-2">
@@ -41,6 +43,11 @@
 
       <button type="submit" class="btn btn-black" name = "search">Search</button>
   </div>       
+</form>
+
+<form method = "get">
+    <input type="hidden" id="custId" name="custId" value="3487">
+    <button type = "submit" class = "btn btn-blue" name = "Upload">Upload (Test)</button>
 </form>
 
 <br>

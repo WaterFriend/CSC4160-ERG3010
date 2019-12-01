@@ -63,7 +63,7 @@ def uploadPage(request, doctorID):
         else:
             message = "Please provide patient's full name!"
     else:
-        return render(request, 'upload/upload.html', {"doctorID": doctorID})
+        return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     
     return redirect(homeURL)
 

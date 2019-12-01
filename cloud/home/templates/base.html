@@ -14,18 +14,28 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark mb-4 justify-content-between" style="background-color:#000000">
         <div class="container">
-          <a class="navbar-brand">CANCER DETECTION SYSTEM</a>
+          <div class="font-weight-bold" id = "font-color">CANCER DETECTION SYSTEM</div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav sticky-top ml-auto">
               
+              <li class="nav-item">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                      <button class = "btn" id = "btn-back" href = "{{ backLink }}">Back</button>
+                    </div>
+              </li> 
+
               {% if user.is_authenticated %}
               <li class="nav-item">
                   <form  method = "POST">
                   {% csrf_token %}
-                    <button type = "submit" class = "btn" name="logout">Logout</button>
+                    <div class="btn-toolbar" role="toolbar">
+                      <button type = "submit" class = "btn" name="logout">Logout</button>
+                    </div>
+                  </div>
                   </form>
               </li>
                 
@@ -44,6 +54,7 @@
     <div class = "background-div">
         
     </div>
+
 
     {% if user.is_authenticated %}
       <div class = "welcome-user"><h3>Welcome back, Dr. {{user.username}}</h3><br></div> 

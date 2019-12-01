@@ -9,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models               import Q
 from django.views.decorators.csrf   import csrf_exempt
 
+import json 
+import time
+import os
+
 from upload.models      import Patient
 
 
@@ -24,6 +28,7 @@ def result_list(request, doctorID):
             
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
+                
                 #'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
             }
             return render(request, 'home.html', content)
@@ -31,7 +36,8 @@ def result_list(request, doctorID):
             patientList = Patient.objects.all()
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
-                'patient'     : patientList.filter(dID=doctorID)
+                'patient'     : patientList.filter(dID=doctorID),
+                'id123' : doctorID
             }
 
             # print("printing in default mode")
