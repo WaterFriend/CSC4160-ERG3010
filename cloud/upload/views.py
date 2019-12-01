@@ -27,7 +27,7 @@ def uploadPage(request, doctorID):
         gender      = request.POST.get('gender')
         race        = request.POST.get('race')
         ethnicity   = request.POST.get('ethnicity')
-        pstatus      = request.POST.get('pstatus')
+        pstatus     = request.POST.get('pstatus')
         remark      = request.POST.get('remark', 'None')
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
@@ -48,7 +48,7 @@ def uploadPage(request, doctorID):
                                 # resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
                                 # resultIMG = 'https://4160-project.s3.amazonaws.com/'
                                 # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
-                                return redirect("../home/%s", doctorID)
+                                return render('../home/%s' %doctorID)
                             else:
                                 message = "Please provide patient's age!"                                                   
                         else:
@@ -64,6 +64,6 @@ def uploadPage(request, doctorID):
     else:
         return render(request, 'upload/upload.html', {"doctorID": doctorID})
     
-    return redirect("../home/%s", doctorID)
+    return redirect("../home/%s" %doctorID)
 
 
