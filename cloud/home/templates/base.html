@@ -22,23 +22,16 @@
             <ul class="navbar-nav sticky-top ml-auto">
               
               <li class="nav-item">
-                <div class="btn-toolbar" role="toolbar">
-                    <div class="btn-group mr-2" role="group">
-                      <button class = "btn" id = "btn-back" href = "{{ backLink }}">Back</button>
-                    </div>
+                  <a href = "{{ backLink }}" class = "btn">Back</a>
               </li> 
 
               {% if user.is_authenticated %}
               <li class="nav-item">
-                  <form  method = "POST">
+                  <form method = "POST" action = "{% url 'logout' %}">
                   {% csrf_token %}
-                    <div class="btn-toolbar" role="toolbar">
                       <button type = "submit" class = "btn" name="logout">Logout</button>
-                    </div>
-                  </div>
                   </form>
               </li>
-                
 
               {% endif %}
                 
