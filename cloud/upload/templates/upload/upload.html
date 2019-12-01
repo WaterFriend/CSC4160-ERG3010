@@ -17,9 +17,8 @@
     </head>
     <body>
         <h1>Patient Form</h1>
-        <div id="doctorID">
-            Your DoctorID: {{doctorID}}
-        </div><br>
+        <h2><span class="badge badge-primary">Your DoctorID: {{doctorID}}</span></h2>
+        <br>
         <form>
             {% csrf_token %}
             <input type="text" id = "patient_fname" class="form-control" placeholder="First Name"><br>
@@ -36,7 +35,7 @@
 
             <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/><br>
         </form>
-        <button id="upload-button" class = "btn btn-xs btn-outline-primary mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
+        <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
