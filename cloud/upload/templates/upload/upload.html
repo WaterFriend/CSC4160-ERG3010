@@ -98,7 +98,6 @@
                 results.innerHTML = img_update_URL;
                 $.post(img_update_URL, data, function (response) {
                     if (response === 'success') {
-                        //document.getElementById("uploaded-img").src = "imgURL";
                         results.innerHTML = 'modify database succeed!!!!!!';
                     }
                     else { results.innerHTML = 'Uploading Failed due to unknow error!';}

@@ -5,10 +5,10 @@ import uuid
 
 class Patient(models.Model):
     pID         = models.CharField(max_length = 15, primary_key=True)
-    pFName      = models.CharField(max_length = 30,  blank=True, null=False)
-    pLName      = models.CharField(max_length = 30,  blank=True, null=False)
-    pGender     = models.CharField(max_length = 10,  blank=True, null=False)
-    pRace       = models.CharField(max_length = 20,  blank=True, null=False)
+    pFName      = models.CharField(max_length = 30,  blank=True, null=True)
+    pLName      = models.CharField(max_length = 30,  blank=True, null=True)
+    pGender     = models.CharField(max_length = 10,  blank=True, null=True)
+    pRace       = models.CharField(max_length = 20,  blank=True, null=True)
     pEthnicity  = models.CharField(max_length = 20,  blank=True, null=True)
     pStatus     = models.CharField(max_length = 5,   blank=True, null=False)
     pRemark     = models.CharField(max_length = 255, blank=True, null=True)
@@ -20,11 +20,3 @@ class Patient(models.Model):
     def __str__(self):
         return self.pID
 
-
-# class Doctor(models.Model):
-#     dID         = models.AutoField(primary_key = True)
-#     dAccount    = models.CharField(max_length = 15)
-#     dPassword   = models.CharField(max_length = 255) 
-
-#     def __str__(self):
-#         return self.dID

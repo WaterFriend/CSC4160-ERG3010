@@ -27,18 +27,17 @@ def uploadPage(request, doctorID):
         gender      = request.POST.get('gender')
         race        = request.POST.get('race')
         ethnicity   = request.POST.get('ethnicity')
-        pstatus      = request.POST.get('pstatus')
+        pstatus     = request.POST.get('pstatus')
         remark      = request.POST.get('remark', 'None')
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
         doc = Doctor.objects.get(dID = doctorID)
-        print(settings.AWS_ACCESS_KEY_ID)
 
-        if fName != "" and lName != "":                                                         #check if user doesn't provide patient's full name
+        if fName != "" and lName != "":                                                     #check if user doesn't provide patient's full name
             if gender != "":                                                                #check if user doesn't provide patient's gender 
                 if race != "":                                                              #check if user doesn't provide patient's race
                     if ethnicity != "":                                                     #check if user doesn't provide patient's ethnicity
-                        if pstatus != "":                                                    #check if user doesn't provide patient's status
+                        if pstatus != "":                                                   #check if user doesn't provide patient's status
                             if age != None:                                                 #check if user doesn't provide patient's age
                                 patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
                                 #print(sid)
@@ -46,10 +45,10 @@ def uploadPage(request, doctorID):
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                     pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)                                            
                                 print("update database succeed!!")
-                                homeURL = '/home/'+str(doctorID)+'/'
-                                #resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
-                                patient.update(resultImg=resultIMG)             # change the resultImg of the instance
-                                return redirect(homeURL)
+                                # resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
+                                # resultIMG = 'https://4160-project.s3.amazonaws.com/'
+                                # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
+                                return render('../home/%s' %doctorID)
                             else:
                                 message = "Please provide patient's age!"                                                   
                         else:
@@ -65,52 +64,6 @@ def uploadPage(request, doctorID):
     else:
         return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     
-    return redirect(homeURL)
+    return redirect("../home/%s" %doctorID)
 
-
-@csrf_exempt
-def upload(request):  #(request, userID)
-    if request.method == "POST":
-        fName       = request.POST.get('firstName')
-        lName       = request.POST.get('lastName')
-        gender      = request.POST.get('gender')
-        race        = request.POST.get('race')
-        ethnicity   = request.POST.get('ethnicity')
-        pstatus     = request.POST.get('pstatus')
-        remark      = request.POST.get('remark', 'None')
-        age         = request.POST.get('age')
-        imgURL      = request.POST.get('imgURL')
-        doctorID    = request.POST.get('doctorID')
-        
-        if fName != "" and lName != "":                                                         #check if user doesn't provide patient's full name
-            if Patient.objects.filter(Q(pFName=fName) | Q(pLName=lName)).exists() == False:     #check if the patient had existed  
-                if gender != "":                                                                #check if user doesn't provide patient's gender 
-                    if race != "":                                                              #check if user doesn't provide patient's race
-                        if ethnicity != "":                                                     #check if user doesn't provide patient's ethnicity
-                            if status != "":                                                    #check if user doesn't provide patient's status
-                                if age != None:                                                 #check if user doesn't provide patient's age
-                                    patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
-                                    #print(sid)
-                                    patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
-                                                                        pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doctorID)                                            
-                                    print("update database succeed!!!!!!!!!!!!!")
-                                    message = "update database succeed!!!!!!!!!!!!!"
-                                    homeURL = '/home/'+doctorID+'/'
-                                    return redirect(homeURL)
-                                else:
-                                    message = "Please provide patient's age!"                                                   
-                            else:
-                                message = "Please provide patient's status!"
-                        else:
-                            message = "Please provide patient's ethnicity!"
-                    else:
-                        message = "Please provide patient's race!"
-                else:
-                    message = "Please provide patient's gender!"
-            else:
-                message = "The patient had already exist!"
-        else:
-            message = "Please provide patient's full name!"
-    
-    return redirect(homeURL)
 

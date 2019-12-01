@@ -68,7 +68,7 @@ def process_image(url, pid):
         config=Config(signature_version='s3v4')
     )
     s3.Bucket(BUCKET_NAME).put_object(Key=outputName, Body=tiles)
-    result_path = 'https://' + '4160-project.s3.amazonaws.com' +'/'+ outputName
+    result_path = 'https://4160-project.s3.amazonaws.com/'+ outputName
     init += 1
     return(result_path) # return the url
     
