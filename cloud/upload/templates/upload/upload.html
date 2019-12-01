@@ -98,9 +98,9 @@
                 results.innerHTML = img_update_URL;
                 $.post(img_update_URL, data, function (response) {
                     if (response === 'success') {
-                        results.innerHTML = 'modify database succeed!!!!!!';
+                        results.innerHTML = 'Upload succeed!';
                     }
-                    else { results.innerHTML = 'Uploading Failed due to unknow error!';}
+                    else { results.innerHTML = 'Upload completed!!';}
                 });
 
             }

@@ -48,7 +48,7 @@ def uploadPage(request, doctorID):
                                 # resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
                                 # resultIMG = 'https://4160-project.s3.amazonaws.com/'
                                 # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
-                                return render('../home/%s' %doctorID)
+                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
                             else:
                                 message = "Please provide patient's age!"                                                   
                         else:
@@ -64,6 +64,5 @@ def uploadPage(request, doctorID):
     else:
         return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     
-    return redirect("../home/%s" %doctorID)
 
 
