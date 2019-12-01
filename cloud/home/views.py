@@ -19,24 +19,34 @@ from upload.models      import Patient
 @csrf_exempt
 def result_list(request, doctorID):
     if request.method == "GET":
-        if 'search' in request.GET:
+        patientList = Patient.objects.all()
+        content = {
+            'uploadLink'  : "../upload/" + doctorID,
+            'patient'     : patientList.filter(dID=doctorID),
+        }
+        return render(request, 'home.html', content)  
+    elif request.method == "POST":
+        if 'logout' in request.POST:   
+            logout(request) 
+            return redirect('../login/login')
+        elif 'search' in request.POST:
             patientList = Patient.objects.all()
-            firstName = request.POST.get('firstname')
-            lastName = request.POST.get('lastname')
-            gender = request.POST.get('gender')
-            age = request.POST.get('age')
+            firstName   = request.POST.get('firstname')
+            lastName    = request.POST.get('lastname')
+            gender      = request.POST.get('gender')
+            age         = request.POST.get('age')
             
-            print("!!!!!firstname: ", firstName, " lastname: ", lastName, " gender: ", gender, " age: ", age)
+            #print("!!!!!firstname: ", firstName, " lastname: ", lastName, " gender: ", gender, " age: ", age)
 
             patientList = patientList.filter(dID=doctorID)
             #print("first print: ", patientList)
-            if firstName != "" and firstName != None:
+            if firstName != ""  and firstName != None:
                 patientList = patientList.filter(pFName=firstName)
-            if lastName != "" and lastName != None:
+            if lastName != ""   and lastName != None:
                 patientList = patientList.filter(pLName=lastName)
-            if gender != "" and gender != None:
+            if gender != "Gender..."     and gender != None:
                 patientList = patientList.filter(pGender=gender)
-            if age != None:
+            if age != ""        and age != None :
                 patientList = patientList.filter(pAge=age)
             
             #print("second print: ", patientList)
@@ -46,17 +56,6 @@ def result_list(request, doctorID):
                 'patient'     : patientList,
             }
             return render(request, 'home.html', content)
-        else:
-            patientList = Patient.objects.all()
-            content = {
-                'uploadLink'  : "../upload/" + doctorID,
-                'patient'     : patientList.filter(dID=doctorID),
-            }
-            return render(request, 'home.html', content)  
-    elif request.method == "POST":
-        if 'logout' in request.POST:   
-            logout(request) 
-            return redirect('../login/login')
         # elif 'upload' in request.POST:
         #     patientID
         #     return redirect('../result/%s' %doctorID)
