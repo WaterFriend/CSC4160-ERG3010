@@ -37,7 +37,6 @@ def result_list(request, doctorID):
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList.filter(dID=doctorID),
-                'id123' : doctorID
             }
 
             # print("printing in default mode")
