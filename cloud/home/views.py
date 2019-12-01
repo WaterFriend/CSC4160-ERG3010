@@ -22,6 +22,7 @@ def result_list(request, doctorID):
         patientList = Patient.objects.all()
         content = {
             'uploadLink'  : "../upload/" + doctorID,
+            'backLink'    : "../login/login",
             'patient'     : patientList.filter(dID=doctorID),
         }
         return render(request, 'home.html', content)  
@@ -40,22 +41,21 @@ def result_list(request, doctorID):
 
             patientList = patientList.filter(dID=doctorID)
             #print("first print: ", patientList)
-            if firstName != ""  and firstName != None:
+            if firstName != ""       and firstName != None:
                 patientList = patientList.filter(pFName=firstName)
-            if lastName != ""   and lastName != None:
+            if lastName != ""        and lastName != None:
                 patientList = patientList.filter(pLName=lastName)
-            if gender != "Gender..."     and gender != None:
+            if gender != "Gender..." and gender != None:
                 patientList = patientList.filter(pGender=gender)
-            if age != ""        and age != None :
+            if age != ""             and age != None :
                 patientList = patientList.filter(pAge=age)
             
             #print("second print: ", patientList)
 
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
+                'backLink'    : "../login/login",
                 'patient'     : patientList,
+                
             }
             return render(request, 'home.html', content)
-        # elif 'upload' in request.POST:
-        #     patientID
-        #     return redirect('../result/%s' %doctorID)
