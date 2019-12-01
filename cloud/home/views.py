@@ -21,15 +21,24 @@ def result_list(request, doctorID):
     if request.method == "GET":
         if 'search' in request.GET:
             patientList = Patient.objects.all()
-            firstname = request.POST.get('firstname')
-            lastname = request.POST.get('lastname')
+            firstName = request.POST.get('firstname')
+            lastName = request.POST.get('lastname')
             gender = request.POST.get('gender')
             age = request.POST.get('age')
             
+            patientList = patientList.filter(dID=doctorID)
+            if firstName != "" or firstName != None:
+                patientList = patientList.filter(pFName=firstName)
+            if lastName != "" or lastName != None:
+                patientList = patientList.filter(pLName=lastName)
+            if gender != "" or gender != None:
+                patientList = patientList.filter(pGender=gender)
+            if age != None:
+                patientList = patientList.filter(pAge=age)
+            
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
-                
-                #'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
+                'patient'     : patientList,
             }
             return render(request, 'home.html', content)
         else:
@@ -38,10 +47,6 @@ def result_list(request, doctorID):
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList.filter(dID=doctorID),
             }
-
-            # print("printing in default mode")
-            # print(content)
-            #print(patientList.filter(dID=doctorID)[0])
             return render(request, 'home.html', content)  
     elif request.method == "POST":
         if 'logout' in request.POST:   
