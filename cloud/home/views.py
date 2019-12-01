@@ -26,16 +26,21 @@ def result_list(request, doctorID):
             gender = request.POST.get('gender')
             age = request.POST.get('age')
             
+            print("!!!!!firstname: ", firstName, " lastname: ", lastName, " gender: ", gender, " age: ", age)
+
             patientList = patientList.filter(dID=doctorID)
-            if firstName != "" or firstName != None:
+            #print("first print: ", patientList)
+            if firstName != "" and firstName != None:
                 patientList = patientList.filter(pFName=firstName)
-            if lastName != "" or lastName != None:
+            if lastName != "" and lastName != None:
                 patientList = patientList.filter(pLName=lastName)
-            if gender != "" or gender != None:
+            if gender != "" and gender != None:
                 patientList = patientList.filter(pGender=gender)
             if age != None:
                 patientList = patientList.filter(pAge=age)
             
+            #print("second print: ", patientList)
+
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList,
