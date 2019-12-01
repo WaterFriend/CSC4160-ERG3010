@@ -57,9 +57,9 @@ def process_image(url, pid):
 
     tiles = image_slicer.join(tiles)
     #upload the image here 'tiles' is the processed image
-    ACCESS_KEY_ID = settings.AWS_ACCESS_KEY_ID
-    ACCESS_SECRET_KEY = settings.AWS_SECRET_ACCESS_KEY
-    BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
+    ACCESS_KEY_ID = 'AKIASKKR5242U53BQZ5C'
+    ACCESS_SECRET_KEY = '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'
+    BUCKET_NAME = '4160-project'
     outputName = "test/prsimg_" + pid + ".jpg"
     s3 = boto3.resource(
         's3',
@@ -68,7 +68,7 @@ def process_image(url, pid):
         config=Config(signature_version='s3v4')
     )
     s3.Bucket(BUCKET_NAME).put_object(Key=outputName, Body=tiles)
-    result_path = 'https://' + settings.AWS_S3_CUSTOM_DOMAIN +'/'+ outputName
+    result_path = 'https://' + '4160-project.s3.amazonaws.com' +'/'+ outputName
     init += 1
     return(result_path) # return the url
     

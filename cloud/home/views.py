@@ -24,7 +24,7 @@ def result_list(request, doctorID):
             
             content = {
                 'uploadLink'  : "../upload/" + doctorID,
-                'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
+                #'patient'     : patientList.filter(dID=doctorID).filter(pFName=firstname).filter(pLName=lastname).filter(pGender=gender).filter(pAge=age),
             }
             return render(request, 'home.html', content)
         else:
@@ -33,13 +33,15 @@ def result_list(request, doctorID):
                 'uploadLink'  : "../upload/" + doctorID,
                 'patient'     : patientList.filter(dID=doctorID)
             }
+
+            # print("printing in default mode")
+            # print(content)
+            #print(patientList.filter(dID=doctorID)[0])
             return render(request, 'home.html', content)  
-    
-    
     elif request.method == "POST":
         if 'logout' in request.POST:   
             logout(request) 
             return redirect('../login/login')
-        elif '' in request.POST:
-            patientID
-            return redirect('../result/%s' %doctorID)
+        # elif 'upload' in request.POST:
+        #     patientID
+        #     return redirect('../result/%s' %doctorID)
