@@ -34,9 +34,9 @@
             <input type="text"  id="patient_remark"    name="remark"  class="form-control" placeholder="Remark"><br>
 
             <input type="file"  id="file-chooser"      name="file"    class = "form-control mb-2 mr-sm-2"/><br>
-        
-            <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
-        </form>
+        </form>        
+        <button id="upload-button" onclick="uploadFile()" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
+
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
@@ -94,35 +94,38 @@
                     }
                     else { results.innerHTML = 'Upload completed!!';}
                 });
-
             }
 
-            button.addEventListener('click', function() {
+            //button.addEventListener('click', function() {
+            function uploadFile() {
+                results.innerHTML = '@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!calling&&&&&&&&&&&&&&*****************';
                 var file = fileChooser.files[0];
-                if (file) {
+                if (file) 
+                {
                     results.innerHTML = '';
                     var objKey = 'patient/' + fName.value + lName.value + '/raw/' + file.name;
-                    var params = {
-                        Key: objKey,
-                        ContentType: file.type,
-                        Body: file,
-                        ACL: 'public-read'
-                    };
                     imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
+                    var params = 
+                    {
+                        Bucket      : bucketName,
+                        Key         : objKey,
+                        ContentType : file.type,
+                        Body        : file,
+                        ACL         : 'public-read'
+                    };
                     results.innerHTML = 'Uplaoding Image. Please wait~';
                     bucket.putObject(params, function(err, data) {
                         if (err) {
                             results.innerHTML = 'ERROR: ' + err;
                         } else {
-                            //listObjs();
-                            patientInfo();
+                            console.info(data);
                         }
                     });
                     results.innerHTML = 'Image Uplaoded. Image recognition could take some time, please wait patiently';
-                } else {
+                } 
+                else 
                     results.innerHTML = 'Nothing to upload.';
-                }
-            }, false);
+            }//, false);
 
             function listObjs() {
                 var prefix = 'testing';
