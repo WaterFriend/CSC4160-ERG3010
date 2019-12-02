@@ -31,10 +31,8 @@ def uploadPage(request, doctorID):
         remark      = request.POST.get('premark', 'None')
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
-        #image       = request.POST.get('file')        
-        #imgURL      = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + fName + lName + '/raw/' + image
         doc = Doctor.objects.get(dID = doctorID)
-        print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, imgURL)
+        #print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, imgURL)
 
         if fName != ""  and lName != "":                  #check if user doesn't provide patient's full name
             if gender != "":                              #check if user doesn't provide patient's gender 
@@ -45,16 +43,11 @@ def uploadPage(request, doctorID):
                                 patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime())
 
                                 #print(sid)
-                                print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
+                                #print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                     pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)                                            
-                                
-                                # resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
-                                # resultIMG = 'https://4160-project.s3.amazonaws.com/'
-                                # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
                                 message = "Database update succeed!!"
                                 return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
-                                #return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
                             else:
                                 message = "Please provide patient's age!"
                                 return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})                                                   

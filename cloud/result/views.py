@@ -7,6 +7,8 @@ from django.contrib                 import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models               import Q
 from django.views.decorators.csrf   import csrf_exempt
+from django.forms.models            import model_to_dict
+
 
 # Create your views here.
 from upload.models                  import Patient
@@ -24,6 +26,13 @@ def result(request, doctorID, patientID):
         remark      = patient.pRemark
         age         = patient.pAge
 
+        patientDict = model_to_dict(patient)
+        rawPath     = patientDict['pImage']
+        index       = rawPath.rfind('/')
+        resultPath  = rawPath[index:]
+        resultPath  = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + firstName + lastName + '/result' + '/qqqqq.jpg'
+        #print("patientDict: ", patientDict)
+        print("rawPath: ", rawPath, " index: " ,index, " resultPath: ", resultPath)
         content = {
             'firstName' : firstName,
             'lastName'  : lastName,
@@ -33,6 +42,7 @@ def result(request, doctorID, patientID):
             'status'    : status,
             'remark'    : remark,
             'age'       : age,
+            'resultPath': resultPath,
             "backLink"  : "../../home/" + doctorID,
         }
 
