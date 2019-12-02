@@ -31,9 +31,9 @@ def uploadPage(request, doctorID):
         remark      = request.POST.get('remark', 'None')
         age         = request.POST.get('age')
         image       = request.POST.get('file')        
-        #imgURL      = request.POST.get('imgURL')
+        imgURL      = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + fName + lName + '/raw/' + image
         doc = Doctor.objects.get(dID = doctorID)
-        print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, image)
+        print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, imgURL)
 
         if fName != ""  and lName != "":                  #check if user doesn't provide patient's full name
             if gender != "":                              #check if user doesn't provide patient's gender 
