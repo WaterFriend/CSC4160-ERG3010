@@ -34,7 +34,6 @@ def result(request, doctorID, patientID):
             'remark'    : remark,
             'age'       : age,
             "backLink"  : "../../home/" + doctorID,
-
         }
 
         return render(request, 'detailed_preview.html', content)  #TODO
