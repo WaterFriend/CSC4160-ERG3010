@@ -32,13 +32,14 @@ def uploadPage(request, doctorID):
         age         = request.POST.get('age')
         imgURL      = request.POST.get('imgURL')
         doc = Doctor.objects.get(dID = doctorID)
+        print("before!!!!",age)
 
-        if fName != "" and lName != "":                                                     #check if user doesn't provide patient's full name
-            if gender != "":                                                                #check if user doesn't provide patient's gender 
-                if race != "":                                                              #check if user doesn't provide patient's race
-                    if ethnicity != "":                                                     #check if user doesn't provide patient's ethnicity
-                        if pstatus != "":                                                   #check if user doesn't provide patient's status
-                            if age != None:                                                 #check if user doesn't provide patient's age
+        if fName != ""  and lName != "":                  #check if user doesn't provide patient's full name
+            if gender != "":                              #check if user doesn't provide patient's gender 
+                if race != "":                            #check if user doesn't provide patient's race
+                    if ethnicity != "":                   #check if user doesn't provide patient's ethnicity
+                        if pstatus != "":                 #check if user doesn't provide patient's status
+                            if age != None:               #check if user doesn't provide patient's age
                                 patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
                                 #print(sid)
                                 print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
@@ -50,17 +51,23 @@ def uploadPage(request, doctorID):
                                 # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
                                 return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
                             else:
-                                message = "Please provide patient's age!"                                                   
+                                print(age, "Please provide patient's age!")
+                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})                                                   
                         else:
-                            message = "Please provide patient's status!"
+                            print(pstatus, "Please provide patient's status!")
+                            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
                     else:
-                        message = "Please provide patient's ethnicity!"
+                        print(ethnicity, "Please provide patient's ethnicity!")
+                        return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
                 else:
-                    message = "Please provide patient's race!"
+                    print(race, "Please provide patient's race!")
+                    return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
             else:
-                message = "Please provide patient's gender!"
+                print(gender, "Please provide patient's gender!")
+                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
         else:
-            message = "Please provide patient's full name!"
+            print(fName, lName, "Please provide patient's full name!")
+            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     else:
         return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     

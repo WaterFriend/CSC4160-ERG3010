@@ -19,7 +19,7 @@
         <h1>Patient Form</h1>
         <h2><span class="badge badge-primary">Your DoctorID: {{doctorID}}</span></h2>
         <br>
-        <form>
+        <form method="POST">
             {% csrf_token %}
             <input type="text" id = "patient_fname" class="form-control" placeholder="First Name"><br>
             <input type="text" id = "patient_lname" class="form-control" placeholder="Last Name"><br>
@@ -27,15 +27,16 @@
             <input type="radio" id="patient_gender" value="male"> Male<br>
             <input type="radio" id="patient_gender" value="female"> Female<br>
             <input type="radio" id="patient_gender" value="other"> Other<br><br>
-            <input type="text" id = "patient_age" class="form-control" placeholder="Age"><br>
-            <input type="text" id = "patient_race" class="form-control" placeholder="Race"><br>
-            <input type="text" id = "patient_ethnicity" class="form-control" placeholder="Ethnicity"><br>
-            <input type="text" id = "patient_status" class="form-control" placeholder="Status"><br>
-            <input type="text" id = "patient_remark" class="form-control" placeholder = "Remark"><br>
+            <input type="text"  id="patient_age" class="form-control" placeholder="Age"><br>
+            <input type="text"  id="patient_race" class="form-control" placeholder="Race"><br>
+            <input type="text"  id="patient_ethnicity" class="form-control" placeholder="Ethnicity"><br>
+            <input type="text"  id="patient_status" class="form-control" placeholder="Status"><br>
+            <input type="text"  id="patient_remark" class="form-control" placeholder = "Remark"><br>
 
             <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/><br>
+        
+            <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         </form>
-        <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
@@ -70,6 +71,7 @@
             var results     = document.getElementById('results');
             var imgURL;
             var img_update_URL = "{% url 'upload' doctorID %}";
+
             function patientInfo() {
                 var data = {
                     'fName'       : fName.value,
@@ -94,11 +96,12 @@
                 });
 
             }
+
             button.addEventListener('click', function() {
                 var file = fileChooser.files[0];
                 if (file) {
                     results.innerHTML = '';
-                    var objKey = 'testing/' + file.name;
+                    var objKey = 'patient/' + fName.value + lName.value + '/raw/' + file.name;
                     var params = {
                         Key: objKey,
                         ContentType: file.type,
@@ -120,6 +123,7 @@
                     results.innerHTML = 'Nothing to upload.';
                 }
             }, false);
+
             function listObjs() {
                 var prefix = 'testing';
                 bucket.listObjects({
