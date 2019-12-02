@@ -22,7 +22,6 @@ from login.models   import Doctor
 @csrf_exempt
 def uploadPage(request, doctorID):
     if request.method == "POST":
-        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwww")
         fName       = request.POST.get('fName')
         lName       = request.POST.get('lName')
         gender      = request.POST.get('gender')
@@ -49,30 +48,33 @@ def uploadPage(request, doctorID):
                                 print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
                                                                     pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)                                            
-                                print("update database succeed!!")
+                                
                                 # resultIMG = process_image(imgURL, patientID)    # process the image and return the output image's url
                                 # resultIMG = 'https://4160-project.s3.amazonaws.com/'
                                 # patient.update(resultImg=resultIMG)             # change the resultImg of the instance
-                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+                                message = "Database update succeed!!"
+                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
+                                #return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
                             else:
-                                print(age, "Please provide patient's age!")
-                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})                                                   
+                                message = "Please provide patient's age!"
+                                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})                                                   
                         else:
-                            print(pstatus, "Please provide patient's status!")
-                            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+                            message = "Please provide patient's status!"
+                            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
                     else:
-                        print(ethnicity, "Please provide patient's ethnicity!")
-                        return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+                        message = "Please provide patient's ethnicity!"
+                        return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
                 else:
-                    print(race, "Please provide patient's race!")
-                    return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+                    message = "Please provide patient's race!"
+                    return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
             else:
-                print(gender, "Please provide patient's gender!")
-                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+                message = "Please provide patient's gender!"
+                return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
         else:
-            print(fName, lName, "Please provide patient's full name!")
-            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
+            message = "Please provide patient's full name!"
+            return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
     else:
+        #Patient.objects.all().delete()
         return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID})
     
 

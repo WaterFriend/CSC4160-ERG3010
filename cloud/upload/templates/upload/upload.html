@@ -39,6 +39,9 @@
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
+        {% if message %}
+        <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
     
         <script type="text/javascript">
             AWS.config.region = 'us-east-2'; // 1. Enter your region
@@ -85,41 +88,40 @@
                     'imgURL'      : imgURL,
                     'doctorID'    : doctorID.value,
                 };
-                
-                results.innerHTML = "@@@@@@@@@@@@@@@@img_update_URL";
                 $.post(img_update_URL, data, function (response) {
-                    if (response === 'success') {
-                        results.innerHTML = 'Upload succeed!';
-                    }
-                    else { results.innerHTML = 'Upload completed!!';}
+                    if (response === 'success')
+                        results.innerHTML = 'Database update completed!';
+                    else 
+                        results.innerHTML = 'Database update completed!';
                 });
 
             }
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function() 
+            {
                 var file = fileChooser.files[0];
-                if (file) {
+                if (file) 
+                {
                     results.innerHTML = '';
-                    var objKey = 'testing/' + file.name;
-                    var params = {
-                        Key: objKey,
-                        ContentType: file.type,
-                        Body: file,
-                        ACL: 'public-read'
-                    };
+                    var objKey = 'patient/' + fName.value + lName.value + '/raw/' + file.name;
                     imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
+                    var params = 
+                    {
+                        Key         : objKey,
+                        ContentType : file.type,
+                        Body        : file,
+                        ACL         : 'public-read'
+                    };
                     results.innerHTML = 'Uplaoding Image. Please wait~';
-                    bucket.putObject(params, function(err, data) {
-                        if (err) {
+                    bucket.putObject(params, function(err, data) 
+                    {
+                        if (err)
                             results.innerHTML = 'ERROR: ' + err;
-                        } else {
-                            //listObjs();
-                        }
                     });
                     patientInfo();
-                    results.innerHTML = 'Image Uplaoded. Image recognition could take some time, please wait patiently';
-                } else {
+                    results.innerHTML = 'Image has Uplaoded. Image recognition could take some time, please wait patiently';
+                } 
+                else
                     results.innerHTML = 'Nothing to upload.';
-                }
             }, false);
 
             function listObjs() {
