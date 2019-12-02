@@ -19,32 +19,44 @@
         <h1>Patient Form</h1>
         <h2><span class="badge badge-primary">Your DoctorID: {{doctorID}}</span></h2>
         <br>
-        <form method="POST">
+        <form>
             {% csrf_token %}
-            <input type="text"  id="patient_fname"     name="fName"   class="form-control" placeholder="First Name"><br>
-            <input type="text"  id="patient_lname"     name="lName"   class="form-control" placeholder="Last Name"><br>
+            <input type="text" id = "patient_fname" class="form-control" placeholder="First Name"><br>
+            <input type="text" id = "patient_lname" class="form-control" placeholder="Last Name"><br>
             Gender: <br>
-            <input type="radio" id="patient_gender"    name="gender"  value="male"> Male<br>
-            <input type="radio" id="patient_gender"    name="gender"  value="female"> Female<br>
-            <input type="radio" id="patient_gender"    name="gender"  value="other"> Other<br><br>
-            <input type="text"  id="patient_age"       name="age"     class="form-control" placeholder="Age"><br>
-            <input type="text"  id="patient_race"      name="race"    class="form-control" placeholder="Race"><br>
-            <input type="text"  id="patient_ethnicity" name="ethnicity" class="form-control" placeholder="Ethnicity"><br>
-            <input type="text"  id="patient_status"    name="pstatus" class="form-control" placeholder="Status"><br>
-            <input type="text"  id="patient_remark"    name="remark"  class="form-control" placeholder="Remark"><br>
+            <input type="radio" id="patient_gender" value="male"> Male<br>
+            <input type="radio" id="patient_gender" value="female"> Female<br>
+            <input type="radio" id="patient_gender" value="other"> Other<br><br>
+            <input type="text" id = "patient_age" class="form-control" placeholder="Age"><br>
+            <input type="text" id = "patient_race" class="form-control" placeholder="Race"><br>
+            <input type="text" id = "patient_ethnicity" class="form-control" placeholder="Ethnicity"><br>
+            <input type="text" id = "patient_status" class="form-control" placeholder="Status"><br>
+            <input type="text" id = "patient_remark" class="form-control" placeholder = "Remark"><br>
 
-            <input type="file"  id="file-chooser"      name="file"    class = "form-control mb-2 mr-sm-2"/><br>
-       
-            <button id="upload-button" onclick="uploadFile()" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
-        </form> 
-
-        
+            <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/><br>
+        </form>
+        <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         <div id="results">
             <img src="showanalysis.jpg" id="uploaded-img" style="max-width: 350px; height: auto; ">
         </div>
     
-        <script type="text/javascript">            
-            var doctorID    = document.getElementById('doctorID');
+        <script type="text/javascript">
+            AWS.config.region = 'us-east-2'; // 1. Enter your region
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: 'us-east-2:e8396e87-819c-4ebd-abd5-5e54faa00fd2' // 2. Enter your identity pool
+            });
+            AWS.config.credentials.get(function(err) {
+                if (err) alert(err);
+                console.log(AWS.config.credentials);
+            });
+            var bucketName = '4160-project'; // Enter your bucket name
+            var bucket = new AWS.S3({
+                params: {
+                    Bucket: bucketName
+                }
+            });
+            
+            var doctorID    = "{{doctorID}}";
             var fName       = document.getElementById('patient_fname');
             var lName       = document.getElementById('patient_lname');
             var gender      = document.getElementById('patient_gender');
@@ -52,14 +64,15 @@
             var ethnicity   = document.getElementById('patient_ethnicity');
             var pstatus     = document.getElementById('patient_status');
             var age         = document.getElementById('patient_age');
-            var remark      = document.getElementById('patient_remark');
+            var premark      = document.getElementById('patient_remark');
             var fileChooser = document.getElementById('file-chooser');
             var button      = document.getElementById('upload-button'); // The button is in the base.html
             var results     = document.getElementById('results');
             var imgURL;
             var img_update_URL = "{% url 'upload' doctorID %}";
-
             function patientInfo() {
+                //console.info(fName.value,lName.value,gender.value,race.value, ethnicity.value,pstatus.value,age.value); //
+                //console.info(premark.value,doctorID);
                 var data = {
                     'fName'       : fName.value,
                     'lName'       : lName.value,
@@ -68,66 +81,46 @@
                     'ethnicity'   : ethnicity.value,
                     'pstatus'     : pstatus.value,
                     'age'         : age.value,
-                    'remark'      : remark.value,
+                    'premark'      : premark.value,
                     'imgURL'      : imgURL,
                     'doctorID'    : doctorID.value,
-                    'testURL'     : img_update_URL
-                    };
-
-                results.innerHTML = img_update_URL;
+                };
+                
+                results.innerHTML = "@@@@@@@@@@@@@@@@img_update_URL";
                 $.post(img_update_URL, data, function (response) {
                     if (response === 'success') {
                         results.innerHTML = 'Upload succeed!';
                     }
                     else { results.innerHTML = 'Upload completed!!';}
                 });
-            }
 
-            //button.addEventListener('click', function() {
-            function uploadFile() {
-                AWS.config.region = 'us-east-2'; // 1. Enter your region
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-east-2:e8396e87-819c-4ebd-abd5-5e54faa00fd2' // 2. Enter your identity pool
-                });
-                AWS.config.credentials.get(function(err) 
-                {
-                    if (err) alert(err);
-                    console.log(AWS.config.credentials);
-                });
-                var bucketName = '4160-project'; // Enter your bucket name
-                var bucket = new AWS.S3({
-                    params: {
-                        Bucket: bucketName
-                    }
-                });
-                results.innerHTML = '@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!calling&&&&&&&&&&&&&&*****************';
+            }
+            button.addEventListener('click', function() {
                 var file = fileChooser.files[0];
-                if (file) 
-                {
+                if (file) {
                     results.innerHTML = '';
-                    var objKey = 'patient/' + fName.value + lName.value + '/raw/' + file.name;
-                    imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
-                    var params = 
-                    {
-                        Bucket      : bucketName,
-                        Key         : objKey,
-                        ContentType : file.type,
-                        Body        : file,
-                        ACL         : 'public-read'
+                    var objKey = 'testing/' + file.name;
+                    var params = {
+                        Key: objKey,
+                        ContentType: file.type,
+                        Body: file,
+                        ACL: 'public-read'
                     };
+                    imgURL = 'https://' + bucketName + '.s3.' + 'us-east-2.amazonaws.com/' + objKey; //save it to the database
                     results.innerHTML = 'Uplaoding Image. Please wait~';
                     bucket.putObject(params, function(err, data) {
                         if (err) {
                             results.innerHTML = 'ERROR: ' + err;
                         } else {
-                            console.info(data);
+                            //listObjs();
                         }
                     });
+                    patientInfo();
                     results.innerHTML = 'Image Uplaoded. Image recognition could take some time, please wait patiently';
-                } 
-                else 
+                } else {
                     results.innerHTML = 'Nothing to upload.';
-            }//, false);
+                }
+            }, false);
 
             function listObjs() {
                 var prefix = 'testing';

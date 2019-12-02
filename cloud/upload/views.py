@@ -22,16 +22,18 @@ from login.models   import Doctor
 @csrf_exempt
 def uploadPage(request, doctorID):
     if request.method == "POST":
+        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwww")
         fName       = request.POST.get('fName')
         lName       = request.POST.get('lName')
         gender      = request.POST.get('gender')
         race        = request.POST.get('race')
         ethnicity   = request.POST.get('ethnicity')
         pstatus     = request.POST.get('pstatus')
-        remark      = request.POST.get('remark', 'None')
+        remark      = request.POST.get('premark', 'None')
         age         = request.POST.get('age')
-        image       = request.POST.get('file')        
-        imgURL      = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + fName + lName + '/raw/' + image
+        imgURL      = request.POST.get('imgURL')
+        #image       = request.POST.get('file')        
+        #imgURL      = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + fName + lName + '/raw/' + image
         doc = Doctor.objects.get(dID = doctorID)
         print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, imgURL)
 
