@@ -30,9 +30,10 @@ def uploadPage(request, doctorID):
         pstatus     = request.POST.get('pstatus')
         remark      = request.POST.get('remark', 'None')
         age         = request.POST.get('age')
-        imgURL      = request.POST.get('imgURL')
+        image       = request.POST.get('file')        
+        #imgURL      = request.POST.get('imgURL')
         doc = Doctor.objects.get(dID = doctorID)
-        print("before!!!!",age)
+        print("bafore!!!!!", fName, lName, gender, race, ethnicity, pstatus, age, image)
 
         if fName != ""  and lName != "":                  #check if user doesn't provide patient's full name
             if gender != "":                              #check if user doesn't provide patient's gender 
@@ -40,7 +41,8 @@ def uploadPage(request, doctorID):
                     if ethnicity != "":                   #check if user doesn't provide patient's ethnicity
                         if pstatus != "":                 #check if user doesn't provide patient's status
                             if age != None:               #check if user doesn't provide patient's age
-                                patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime()) 
+                                patientID = "p" + time.strftime("%Y%m%d%H%M%S", time.localtime())
+
                                 #print(sid)
                                 print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,

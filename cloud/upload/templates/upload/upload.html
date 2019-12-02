@@ -21,19 +21,19 @@
         <br>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" id = "patient_fname"    class="form-control" placeholder="First Name"><br>
-            <input type="text" id = "patient_lname"    class="form-control" placeholder="Last Name"><br>
+            <input type="text"  id="patient_fname"     name="fName"   class="form-control" placeholder="First Name"><br>
+            <input type="text"  id="patient_lname"     name="lName"   class="form-control" placeholder="Last Name"><br>
             Gender: <br>
-            <input type="radio" id="patient_gender"    value="male"> Male<br>
-            <input type="radio" id="patient_gender"    value="female"> Female<br>
-            <input type="radio" id="patient_gender"    value="other"> Other<br><br>
-            <input type="text"  id="patient_age"       class="form-control" placeholder="Age"><br>
-            <input type="text"  id="patient_race"      class="form-control" placeholder="Race"><br>
-            <input type="text"  id="patient_ethnicity" class="form-control" placeholder="Ethnicity"><br>
-            <input type="text"  id="patient_status"    class="form-control" placeholder="Status"><br>
-            <input type="text"  id="patient_remark"    class="form-control" placeholder="Remark"><br>
+            <input type="radio" id="patient_gender"    name="gender"  value="male"> Male<br>
+            <input type="radio" id="patient_gender"    name="gender"  value="female"> Female<br>
+            <input type="radio" id="patient_gender"    name="gender"  value="other"> Other<br><br>
+            <input type="text"  id="patient_age"       name="age"     class="form-control" placeholder="Age"><br>
+            <input type="text"  id="patient_race"      name="race"    class="form-control" placeholder="Race"><br>
+            <input type="text"  id="patient_ethnicity" name="ethnicity" class="form-control" placeholder="Ethnicity"><br>
+            <input type="text"  id="patient_status"    name="pstatus" class="form-control" placeholder="Status"><br>
+            <input type="text"  id="patient_remark"    name="remark"  class="form-control" placeholder="Remark"><br>
 
-            <input type="file" id="file-chooser" class = "form-control mb-2 mr-sm-2"/><br>
+            <input type="file"  id="file-chooser"      name="file"    class = "form-control mb-2 mr-sm-2"/><br>
         
             <button id="upload-button" class = "btn btn-xs btn-outline-primary btn-block mr-1" style = "box-shadow: 2px 2px 4px #ccc; border-radius: 10px;">Submit</button><br>
         </form>
