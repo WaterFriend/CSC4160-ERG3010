@@ -1,5 +1,6 @@
 #-*- conding:utf-8 -*-
 import time
+import sys
 from django.contrib               import auth
 from django.contrib.auth.hashers  import make_password,check_password
 from django.contrib.auth.models   import User
@@ -8,13 +9,14 @@ from django.http                  import HttpResponseRedirect, HttpResponse
 from django.shortcuts             import render, redirect
 from django.contrib               import messages
 from django.db.models             import Q
-from django.conf import settings
+from django.conf                  import settings
 
 # Create your views here.
 from .forms         import PatientForm, PForm
 from .models        import Patient
 from login.models   import Doctor
-from model.cancer_detection_url import process_image
+#sys.path.insert(0, '')
+from upload.model.cancer_detection_url import process_image
 # from .forms import InfoForm
 
 #import model code

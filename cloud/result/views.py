@@ -25,12 +25,13 @@ def result(request, doctorID, patientID):
         status      = patient.pStatus
         remark      = patient.pRemark
         age         = patient.pAge
+        resultPath  = patient.resultImg
 
         patientDict = model_to_dict(patient)
         rawPath     = patientDict['pImage']
         index       = rawPath.rfind('/')
-        resultPath  = rawPath[index:]
-        resultPath  = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + firstName + lastName + '/result' + '/qqqqq.jpg'
+        #resultPath  = rawPath[index:]
+        #resultPath  = 'https://4160-project.s3.us-east-2.amazonaws.com/patient/' + firstName + lastName + '/result' + '/qqqqq.jpg'
         #print("patientDict: ", patientDict)
         print("rawPath: ", rawPath, " index: " ,index, " resultPath: ", resultPath)
         content = {
