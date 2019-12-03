@@ -14,6 +14,7 @@ from django.conf import settings
 from .forms         import PatientForm, PForm
 from .models        import Patient
 from login.models   import Doctor
+from model.cancer_detection_url import process_image
 # from .forms import InfoForm
 
 #import model code
@@ -45,7 +46,11 @@ def uploadPage(request, doctorID):
                                 #print(sid)
                                 #print(patientID, fName, lName, gender, race, ethnicity, pstatus, age)
                                 patient = Patient.objects.create(pID=patientID, pFName=fName, pLName=lName, pGender=gender,
-                                                                    pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)                                            
+                                                                    pRace=race, pEthnicity=ethnicity, pStatus=pstatus, pAge=age, pRemark=remark, pImage=imgURL, dID=doc)  
+                                patientName = fName + lName
+                                resutlURL = process_image(imgURL, patientName) 
+                                patient.resultImg = resutlURL
+                                patient.save()                                                                             
                                 message = "Database update succeed!!"
                                 return render(request, 'upload/upload.html', {"doctorID": doctorID, "backLink" : "../home/" + doctorID, "message" : message})
                             else:
